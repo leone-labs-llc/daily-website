@@ -5,1146 +5,579 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DaiLY — The World's Most Advanced Task App</title>
   <style>
-    /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: #08080F;
-      color: #FFFFFF;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #08080F; color: #fff; line-height: 1.6; overflow-x: hidden; }
 
-    /* ── Design tokens ── */
     :root {
-      --purple: #7B35CC;
-      --purple-bright: #9B55EC;
-      --purple-glow: rgba(123, 53, 204, 0.35);
-      --teal: #3ECFCF;
-      --teal-glow: rgba(62, 207, 207, 0.25);
-      --bg-0: #08080F;
-      --bg-1: #0D0D1A;
-      --bg-2: #111122;
-      --bg-card: #13132A;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(123, 53, 204, 0.4);
-      --text-1: #FFFFFF;
-      --text-2: rgba(255, 255, 255, 0.62);
-      --text-3: rgba(255, 255, 255, 0.38);
+      --purple: #7B35CC; --purple-b: #9B55EC;
+      --purple-glow: rgba(123,53,204,0.35);
+      --teal: #3ECFCF; --teal-glow: rgba(62,207,207,0.25);
+      --bg0: #08080F; --bg1: #0D0D1A; --bgc: #13132A;
+      --border: rgba(255,255,255,0.08); --ba: rgba(123,53,204,0.4);
+      --t2: rgba(255,255,255,0.62); --t3: rgba(255,255,255,0.38);
     }
 
-    /* ── Typography ── */
-    h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
-    h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
-    h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 600; letter-spacing: -0.02em; }
-    p { font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--text-2); line-height: 1.75; }
+    h1 { font-size: clamp(2.4rem,6vw,4.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
+    h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
+    h3 { font-size: clamp(1.1rem,2vw,1.5rem); font-weight: 600; letter-spacing: -0.02em; }
+    p  { font-size: clamp(0.95rem,1.8vw,1.1rem); color: var(--t2); line-height: 1.75; }
 
-    .gradient-text {
-      background: linear-gradient(135deg, #C47FFF 0%, #7B35CC 40%, #3ECFCF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .teal-text { color: var(--teal); }
-    .label {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 1rem;
-    }
+    .gt { background: linear-gradient(135deg,#C47FFF,#7B35CC,#3ECFCF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .tt { color: var(--teal); }
+    .lbl { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
 
-    /* ── Layout helpers ── */
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 100px 0; position: relative; }
-
-    /* ── Glow orbs ── */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb-purple { background: var(--purple-glow); }
-    .orb-teal   { background: var(--teal-glow); }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
 
     /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 32px; height: 64px;
-      background: rgba(8, 8, 15, 0.75);
-      backdrop-filter: blur(18px);
-      border-bottom: 0.5px solid var(--border);
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; background: rgba(8,8,15,0.8); backdrop-filter: blur(18px); border-bottom: 0.5px solid var(--border); }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-icon {
-      width: 34px; height: 34px; border-radius: 9px;
-      background: linear-gradient(135deg, #9B55EC, #7B35CC);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-logo-wordmark { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
-    .nav-logo-wordmark span { color: var(--teal); }
+    .nav-logo-icon { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg,#9B55EC,#7B35CC); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-wordmark { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+    .nav-wordmark span { color: var(--teal); }
     .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { font-size: 13.5px; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
+    .nav-links a { font-size: 13.5px; color: var(--t2); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: #fff; }
-    .nav-cta {
-      background: linear-gradient(135deg, #9B55EC, #7B35CC);
-      color: #fff; border: none; border-radius: 50px;
-      padding: 9px 22px; font-size: 13.5px; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: opacity 0.2s, transform 0.15s;
-    }
+    .nav-cta { background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 9px 22px; font-size: 13.5px; font-weight: 600; cursor: pointer; text-decoration: none; transition: opacity 0.2s,transform 0.15s; }
     .nav-cta:hover { opacity: 0.88; transform: scale(1.02); }
 
     /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(123,53,204,0.22) 0%, transparent 70%),
-                  radial-gradient(ellipse 40% 40% at 80% 80%, rgba(62,207,207,0.10) 0%, transparent 60%),
-                  var(--bg-0);
-      position: relative; overflow: hidden;
-    }
-    #hero .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(123,53,204,0.15); border: 0.5px solid var(--border-accent);
-      border-radius: 50px; padding: 6px 16px;
-      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-      color: #C47FFF; text-transform: uppercase; margin-bottom: 28px;
-    }
+    #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; background: radial-gradient(ellipse 70% 60% at 50% 0%,rgba(123,53,204,0.22) 0%,transparent 70%), radial-gradient(ellipse 40% 40% at 80% 80%,rgba(62,207,207,0.10) 0%,transparent 60%), var(--bg0); position: relative; overflow: hidden; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(123,53,204,0.15); border: 0.5px solid var(--ba); border-radius: 50px; padding: 6px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #C47FFF; text-transform: uppercase; margin-bottom: 28px; }
     #hero h1 { max-width: 760px; margin-bottom: 20px; }
-    #hero .subhead { max-width: 560px; margin: 0 auto 40px; font-size: clamp(1rem, 2.2vw, 1.18rem); color: var(--text-2); }
+    .subhead { max-width: 560px; margin: 0 auto 40px; font-size: clamp(1rem,2.2vw,1.18rem); color: var(--t2); }
     .hero-cta-group { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-    .btn-hero {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: linear-gradient(135deg, #9B55EC, #7B35CC);
-      color: #fff; border: none; border-radius: 50px;
-      padding: 15px 36px; font-size: 16px; font-weight: 700;
-      cursor: pointer; text-decoration: none;
-      box-shadow: 0 0 40px rgba(123,53,204,0.45);
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-hero:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 0 60px rgba(123,53,204,0.55); }
+    .btn-hero { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 15px 36px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 0 40px rgba(123,53,204,0.45); transition: opacity 0.2s,transform 0.15s; }
+    .btn-hero:hover { opacity: 0.9; transform: translateY(-2px); }
     .store-badges { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-    .store-badge {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,0.06); border: 0.5px solid var(--border);
-      border-radius: 14px; padding: 10px 20px; cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      text-decoration: none; color: inherit;
-    }
-    .store-badge:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.18); }
-    .store-badge-label { font-size: 9px; color: var(--text-2); margin-bottom: 1px; letter-spacing: 0.04em; }
-    .store-badge-name { font-size: 14px; font-weight: 600; color: #fff; }
+    .store-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.06); border: 0.5px solid var(--border); border-radius: 14px; padding: 10px 20px; cursor: pointer; text-decoration: none; color: inherit; transition: background 0.2s; }
+    .store-badge:hover { background: rgba(255,255,255,0.10); }
+    .sb-label { font-size: 9px; color: var(--t2); margin-bottom: 1px; }
+    .sb-name  { font-size: 14px; font-weight: 600; color: #fff; }
 
-    /* Hero phone mockup */
-    .hero-phone-row {
-      margin-top: 64px;
-      display: flex; justify-content: center; gap: 24px;
-      position: relative; z-index: 1;
-    }
-    .phone-frame {
-      width: 220px;
-      background: #0E0E20;
-      border-radius: 40px;
-      border: 1.5px solid rgba(255,255,255,0.12);
-      padding: 14px 10px;
-      position: relative;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
-    }
-    .phone-frame.large { width: 260px; margin-top: -24px; }
-    .phone-notch {
-      width: 80px; height: 22px;
-      background: #08080F;
-      border-radius: 0 0 16px 16px;
-      margin: 0 auto 10px;
-    }
-    .phone-screen {
-      border-radius: 28px; overflow: hidden;
-      background: #111;
-      min-height: 400px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .phone-frame.large .phone-screen { min-height: 480px; }
-    .screen-placeholder {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 10px; padding: 20px;
-      background: linear-gradient(160deg, #0F0F28 0%, #131330 100%);
-    }
-    .screen-placeholder .sp-icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      background: linear-gradient(135deg, rgba(123,53,204,0.4), rgba(62,207,207,0.3));
-      border: 1px solid rgba(123,53,204,0.5);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 4px;
-    }
-    .screen-placeholder p {
-      font-size: 10px; color: rgba(255,255,255,0.35);
-      text-align: center; line-height: 1.5;
-    }
-    .screen-placeholder .sp-label {
-      font-size: 11px; font-weight: 600;
-      color: rgba(255,255,255,0.55); text-align: center;
-    }
+    /* ── PHONE FRAMES ── */
+    .phone-row { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 64px; position: relative; z-index: 1; }
+    .phone { background: #0E0E20; border-radius: 42px; border: 1.5px solid rgba(255,255,255,0.12); padding: 14px 10px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); position: relative; }
+    .phone.center { width: 260px; z-index: 2; }
+    .phone.side   { width: 210px; opacity: 0.82; }
+    .phone.tilt-l { transform: rotate(-5deg); margin-bottom: 20px; }
+    .phone.tilt-r { transform: rotate(5deg);  margin-bottom: 20px; }
+    .phone-notch  { width: 80px; height: 22px; background: #08080F; border-radius: 0 0 16px 16px; margin: 0 auto 10px; }
+    .phone-screen { border-radius: 28px; overflow: hidden; background: #0C0C22; min-height: 400px; display: flex; align-items: stretch; }
+    .phone.center .phone-screen { min-height: 480px; }
 
-    /* Simulated app UI screens */
-    .app-screen {
-      width: 100%; padding: 16px 12px;
-      display: flex; flex-direction: column; gap: 8px;
-      background: linear-gradient(160deg, #0C0C22 0%, #0F0F2A 100%);
-      min-height: 400px;
-    }
-    .app-screen-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 4px;
-    }
-    .app-screen-title { font-size: 13px; font-weight: 700; color: #fff; }
-    .app-screen-badge {
-      font-size: 9px; font-weight: 700; padding: 3px 8px;
-      border-radius: 50px; background: linear-gradient(135deg, #7B35CC, #3ECFCF);
-      color: #fff; letter-spacing: 0.04em;
-    }
-    .task-row {
-      background: rgba(255,255,255,0.04);
-      border: 0.5px solid rgba(255,255,255,0.07);
-      border-radius: 10px; padding: 9px 10px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .task-rank {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: linear-gradient(135deg, #7B35CC, #9B55EC);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 8px; font-weight: 800; color: #fff; flex-shrink: 0;
-    }
-    .task-rank.teal { background: linear-gradient(135deg, #2AACAC, #3ECFCF); }
-    .task-rank.dim { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
-    .task-info { flex: 1; min-width: 0; }
-    .task-name { font-size: 10px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .task-meta { font-size: 8px; color: rgba(255,255,255,0.4); margin-top: 1px; }
-    .task-priority {
-      font-size: 8px; font-weight: 700; padding: 2px 6px;
-      border-radius: 4px; flex-shrink: 0;
-    }
-    .task-priority.high { background: rgba(220,60,60,0.2); color: #FF6B6B; }
-    .task-priority.med  { background: rgba(230,140,40,0.2); color: #FFB347; }
-    .task-priority.low  { background: rgba(62,207,207,0.15); color: #3ECFCF; }
-    .ai-insight {
-      background: linear-gradient(135deg, rgba(123,53,204,0.2), rgba(62,207,207,0.12));
-      border: 0.5px solid rgba(123,53,204,0.4);
-      border-radius: 10px; padding: 8px 10px;
-      font-size: 9px; color: rgba(255,255,255,0.7);
-      line-height: 1.4; margin-top: 4px;
-    }
-    .ai-insight-label { font-size: 8px; font-weight: 700; color: var(--teal); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
+    /* screenshot img inside phone */
+    .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; min-height: 400px; }
+    .phone.center .phone-screen img { min-height: 480px; }
 
-    /* ── DIVIDER ── */
-    .section-divider {
-      border: none;
-      border-top: 0.5px solid var(--border);
-      margin: 0;
-    }
+    /* clean dark placeholder when image missing — NO text shown to visitors */
+    .phone-screen img[src=""] , .phone-screen img:not([src]) { display: none; }
+    .phone-placeholder { width: 100%; min-height: 400px; display: flex; align-items: center; justify-content: center; background: linear-gradient(160deg,#0C0C22,#101028); }
+    .phone.center .phone-placeholder { min-height: 480px; }
+    .phone-placeholder-inner { width: 48px; height: 48px; border-radius: 14px; background: rgba(123,53,204,0.15); border: 1px solid rgba(123,53,204,0.25); display: flex; align-items: center; justify-content: center; }
 
-    /* ── FEATURE SECTIONS ── */
-    .feature-section {
-      padding: 110px 0;
-      position: relative; overflow: hidden;
-    }
-    .feature-section:nth-child(even) { background: var(--bg-1); }
-
-    .split-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: center;
-    }
-    .split-layout.reverse { direction: rtl; }
-    .split-layout.reverse > * { direction: ltr; }
-
-    .feature-copy .label { display: block; }
+    /* ── SECTIONS ── */
+    .section { padding: 110px 0; position: relative; overflow: hidden; }
+    .section.alt { background: var(--bg1); }
+    hr.div { border: none; border-top: 0.5px solid var(--border); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .split.rev { direction: rtl; }
+    .split.rev > * { direction: ltr; }
     .feature-copy h2 { margin-bottom: 20px; }
-    .feature-copy p { margin-bottom: 28px; max-width: 480px; }
+    .feature-copy p  { margin-bottom: 28px; max-width: 480px; }
+    .phone-vis { display: flex; justify-content: center; position: relative; }
+    .glow { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle,rgba(123,53,204,0.18) 0%,transparent 70%); pointer-events: none; }
+    .glow.teal { background: radial-gradient(circle,rgba(62,207,207,0.15) 0%,transparent 70%); }
 
-    .feature-visual {
-      display: flex; justify-content: center; align-items: center;
-      position: relative;
-    }
-    .glow-ring {
-      position: absolute;
-      width: 340px; height: 340px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(123,53,204,0.18) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Priority section (largest) */
-    #priority {
-      padding: 130px 0;
-      background: linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 60%, var(--bg-0) 100%);
-    }
+    /* priority section */
+    #priority { padding: 130px 0; background: linear-gradient(180deg,var(--bg0),var(--bg1),var(--bg0)); }
     #priority .container { text-align: center; }
-    #priority h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); max-width: 700px; margin: 0 auto 20px; }
-    #priority .body-text { max-width: 700px; margin: 0 auto 60px; font-size: clamp(1rem, 1.8vw, 1.12rem); }
-    .priority-phones {
-      display: flex; justify-content: center; align-items: flex-end;
-      gap: 20px; margin-top: 20px;
-    }
-    .priority-phones .phone-frame { transform: rotate(-4deg); }
-    .priority-phones .phone-frame.center { transform: none; margin-top: -32px; width: 280px; z-index: 2; }
-    .priority-phones .phone-frame.right { transform: rotate(4deg); }
+    #priority h2 { font-size: clamp(2.2rem,5vw,3.8rem); max-width: 700px; margin: 0 auto 20px; }
+    #priority .body-text { max-width: 700px; margin: 0 auto 60px; }
+    .priority-phones { display: flex; justify-content: center; align-items: flex-end; gap: 20px; }
 
-    /* ── FEATURE GRID ── */
-    #features-grid {
-      background: var(--bg-1);
-      padding: 100px 0;
-    }
-    #features-grid .container { text-align: center; }
-    #features-grid h2 { margin-bottom: 12px; }
-    #features-grid > .container > p { max-width: 480px; margin: 0 auto 56px; }
-    .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .feat-card {
-      background: var(--bg-card);
-      border: 0.5px solid var(--border);
-      border-radius: 18px;
-      padding: 28px 24px;
-      text-align: left;
-      transition: border-color 0.25s, transform 0.2s;
-    }
-    .feat-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
-    .feat-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 16px;
-      background: rgba(123,53,204,0.15);
-      border: 0.5px solid rgba(123,53,204,0.3);
-    }
-    .feat-icon.teal-bg {
-      background: rgba(62,207,207,0.12);
-      border-color: rgba(62,207,207,0.3);
-    }
+    /* feature grid */
+    #feat-grid { background: var(--bg1); padding: 100px 0; }
+    #feat-grid .container { text-align: center; }
+    #feat-grid h2 { margin-bottom: 12px; }
+    #feat-grid > .container > p { max-width: 480px; margin: 0 auto 56px; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .feat-card { background: var(--bgc); border: 0.5px solid var(--border); border-radius: 18px; padding: 28px 24px; text-align: left; transition: border-color 0.25s,transform 0.2s; }
+    .feat-card:hover { border-color: var(--ba); transform: translateY(-3px); }
+    .feat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; background: rgba(123,53,204,0.15); border: 0.5px solid rgba(123,53,204,0.3); }
+    .feat-icon.t { background: rgba(62,207,207,0.12); border-color: rgba(62,207,207,0.3); }
     .feat-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-    .feat-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .feat-card p  { font-size: 13px; color: var(--t2); line-height: 1.6; }
 
-    /* ── FINAL CTA ── */
-    #final-cta {
-      padding: 130px 0;
-      text-align: center;
-      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(123,53,204,0.22) 0%, transparent 70%), var(--bg-0);
-      position: relative; overflow: hidden;
-    }
-    #final-cta h2 { max-width: 680px; margin: 0 auto 16px; font-size: clamp(2rem, 5vw, 3.6rem); }
-    #final-cta .subhead { max-width: 440px; margin: 0 auto 44px; }
-    .btn-final {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: linear-gradient(135deg, #9B55EC, #7B35CC);
-      color: #fff; border: none; border-radius: 50px;
-      padding: 16px 44px; font-size: 17px; font-weight: 700;
-      cursor: pointer; text-decoration: none;
-      box-shadow: 0 0 50px rgba(123,53,204,0.5);
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-final:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 0 70px rgba(123,53,204,0.6); }
-    .store-badges-final { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    /* CTA */
+    #final-cta { padding: 130px 0; text-align: center; background: radial-gradient(ellipse 80% 60% at 50% 100%,rgba(123,53,204,0.22) 0%,transparent 70%), var(--bg0); position: relative; overflow: hidden; }
+    #final-cta h2 { max-width: 680px; margin: 0 auto 16px; font-size: clamp(2rem,5vw,3.6rem); }
+    #final-cta .subhead { max-width: 440px; }
+    .btn-final { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 16px 44px; font-size: 17px; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 0 50px rgba(123,53,204,0.5); margin-bottom: 28px; transition: opacity 0.2s,transform 0.15s; }
+    .btn-final:hover { opacity: 0.9; transform: translateY(-2px); }
 
-    /* ── FOOTER ── */
-    footer {
-      background: #05050D;
-      border-top: 0.5px solid var(--border);
-      padding: 48px 32px 36px;
-    }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: flex-start;
-      flex-wrap: wrap; gap: 32px;
-    }
-    .footer-brand { display: flex; flex-direction: column; gap: 10px; }
-    .footer-logo { display: flex; align-items: center; gap: 9px; }
-    .footer-logo-icon {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: linear-gradient(135deg, #9B55EC, #7B35CC);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .footer-tagline { font-size: 12.5px; color: var(--text-3); max-width: 240px; line-height: 1.5; }
+    /* footer */
+    footer { background: #05050D; border-top: 0.5px solid var(--border); padding: 48px 32px 36px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; }
+    .footer-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+    .footer-logo-icon { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg,#9B55EC,#7B35CC); display: flex; align-items: center; justify-content: center; }
+    .footer-tagline { font-size: 12.5px; color: var(--t3); max-width: 240px; line-height: 1.5; }
     .footer-links { display: flex; gap: 32px; }
-    .footer-col h4 { font-size: 12px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
-    .footer-col a { display: block; font-size: 13px; color: var(--text-3); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; color: var(--t2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--t3); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
     .footer-col a:hover { color: #fff; }
-    .footer-bottom {
-      max-width: 1100px; margin: 32px auto 0;
-      padding-top: 20px; border-top: 0.5px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 12px;
-    }
-    .footer-bottom p { font-size: 12px; color: var(--text-3); }
+    .footer-bottom { max-width: 1100px; margin: 32px auto 0; padding-top: 20px; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 12px; color: var(--t3); }
 
-    /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(36px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .fade-up.delay-1 { transition-delay: 0.1s; }
-    .fade-up.delay-2 { transition-delay: 0.2s; }
-    .fade-up.delay-3 { transition-delay: 0.3s; }
-    .fade-up.delay-4 { transition-delay: 0.4s; }
-    .fade-up.delay-5 { transition-delay: 0.5s; }
+    /* animations */
+    .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease,transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; } .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; } .fade-up.d4 { transition-delay: 0.4s; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 800px) {
-      .split-layout { grid-template-columns: 1fr; gap: 48px; }
-      .split-layout.reverse { direction: ltr; }
+    /* chips */
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .chip { background: rgba(123,53,204,0.12); border: 0.5px solid rgba(123,53,204,0.3); border-radius: 10px; padding: 9px 14px; }
+    .chip.t { background: rgba(62,207,207,0.10); border-color: rgba(62,207,207,0.3); }
+    .chip-title { font-size: 11px; font-weight: 700; color: #C47FFF; margin-bottom: 2px; }
+    .chip.t .chip-title { color: var(--teal); }
+    .chip-desc  { font-size: 11px; color: var(--t2); }
+
+    /* team avatars */
+    .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 2px solid var(--bg1); flex-shrink: 0; }
+
+    @media(max-width:800px) {
+      .split { grid-template-columns: 1fr; gap: 48px; }
+      .split.rev { direction: ltr; }
       .feat-grid { grid-template-columns: 1fr 1fr; }
-      .priority-phones .phone-frame:not(.center) { display: none; }
-      .priority-phones .phone-frame.center { width: 240px; }
+      .priority-phones .phone.side { display: none; }
       nav { padding: 0 20px; }
       .nav-links { display: none; }
       .footer-links { flex-direction: column; gap: 24px; }
     }
-    @media (max-width: 520px) {
+    @media(max-width:520px) {
       .feat-grid { grid-template-columns: 1fr; }
-      .hero-phone-row .phone-frame:not(.large) { display: none; }
       .store-badges { flex-direction: column; align-items: center; }
-    }
-
-    /* ── SCREENSHOT DROP ZONES ── */
-    .screenshot-note {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 8px; padding: 16px; min-height: 380px;
-      background: linear-gradient(160deg, #0C0C22 0%, #101028 100%);
-      border-radius: 26px;
-      border: 1.5px dashed rgba(123,53,204,0.35);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      position: relative;
-    }
-    
-    .screenshot-note .sn-label {
-      font-size: 10px; font-weight: 700; color: rgba(156,100,240,0.85);
-      text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
-    }
-    .screenshot-note .sn-desc {
-      font-size: 9px; color: rgba(255,255,255,0.35);
-      text-align: center; line-height: 1.6;
-    }
-    .sn-dashed {
-      width: 70%; height: 1px;
-      border-top: 1px dashed rgba(123,53,204,0.3);
-      margin: 2px 0;
-    }
-    .sn-drop-icon {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(123,53,204,0.15);
-      border: 1px solid rgba(123,53,204,0.35);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 2px;
-    }
-    .screenshot-note input[type=file] {
-      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-    }
-    .screenshot-note img.dropped {
-      width: 100%; height: 100%; object-fit: cover;
-      border-radius: 24px; display: block;
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══════════════════════════════
-       NAV
-  ═══════════════════════════════ -->
-  <nav>
-    <a href="#" class="nav-logo">
-      <div class="nav-logo-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M8 13l3 3 5-5" stroke="#3ECFCF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="3" y="4" width="18" height="18" rx="3" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
-        </svg>
-      </div>
-      <span class="nav-logo-wordmark">D<span style="color:var(--teal)">ai</span>LY</span>
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="#3ECFCF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <span class="nav-wordmark">D<span>ai</span>LY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#priority">Priority AI</a></li>
+    <li><a href="#detail">Detail AI</a></li>
+    <li><a href="#notes">Notes</a></li>
+    <li><a href="#sharing">Sharing</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+  </ul>
+  <a href="#final-cta" class="nav-cta">Download Free</a>
+</nav>
+
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="orb" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.6;"></div>
+  <div class="orb" style="width:300px;height:300px;bottom:80px;right:10%;background:var(--teal-glow);opacity:0.4;"></div>
+
+  <span class="eyebrow fade-up">
+    <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#C47FFF"/></svg>
+    World's first AI task prioritization
+  </span>
+
+  <h1 class="fade-up d1">Meet <span class="gt">Priority<br>Assistant.</span></h1>
+  <p class="subhead fade-up d2">The world's first AI that tells you exactly what to do next — and in what order.</p>
+
+  <div class="hero-cta-group fade-up d3">
+    <a href="#" class="btn-hero">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download DaiLY
     </a>
-    <ul class="nav-links">
-      <li><a href="#priority">Priority AI</a></li>
-      <li><a href="#detail">Detail AI</a></li>
-      <li><a href="#notes">Notes</a></li>
-      <li><a href="#sharing">Sharing</a></li>
-      <li><a href="#calendar">Calendar</a></li>
-    </ul>
-    <a href="#final-cta" class="nav-cta">Download Free</a>
-  </nav>
-
-
-  <!-- ═══════════════════════════════
-       HERO
-  ═══════════════════════════════ -->
-  <section id="hero">
-    <div class="orb orb-purple" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);opacity:0.6;"></div>
-    <div class="orb orb-teal" style="width:300px;height:300px;bottom:80px;right:10%;opacity:0.4;"></div>
-
-    <span class="eyebrow fade-up">
-      <svg width="10" height="10" viewBox="0 0 12 12" fill="#C47FFF"><circle cx="6" cy="6" r="5"/></svg>
-      World's first AI task prioritization
-    </span>
-
-    <h1 class="fade-up delay-1">Meet <span class="gradient-text">Priority<br>Assistant.</span></h1>
-
-    <p class="subhead fade-up delay-2">
-      The world's first AI that tells you exactly what to do next — and in what order.
-    </p>
-
-    <div class="hero-cta-group fade-up delay-3">
-      <a href="#" class="btn-hero">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        Download DaiLY
+    <div class="store-badges">
+      <a href="#" class="store-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div><div class="sb-label">Download on the</div><div class="sb-name">App Store</div></div>
       </a>
-      <div class="store-badges">
-        <a href="#" class="store-badge">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <div>
-            <div class="store-badge-label">Download on the</div>
-            <div class="store-badge-name">App Store</div>
+      <a href="#" class="store-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.34.19.73.24 1.1.14l12.02-6.94-2.85-2.85-10.27 9.65zm-1.13-19.9C2.03 4.2 2 4.57 2 4.96v14.08c0 .39.03.76.05 1.1l9.08-8.54-9.08-8.74zM20.47 9.8l-2.73-1.58-3.19 3 3.19 3.19 2.76-1.59c.79-.45.79-1.57-.03-2.02zM4.28.1C3.9 0 3.52.05 3.18.24L13.55 10.6l2.85-2.85L4.28.1z"/></svg>
+        <div><div class="sb-label">Get it on</div><div class="sb-name">Google Play</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Single hero phone — upload screenshot-hero.png to GitHub -->
+  <div class="phone-row fade-up d4">
+    <div class="phone center">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <img src="screenshot-hero.png" alt="DaiLY app hero screen"
+             onerror="this.style.display='none'" />
+        <div class="phone-placeholder">
+          <div class="phone-placeholder-inner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
           </div>
-        </a>
-        <a href="#" class="store-badge">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.34.19.73.24 1.1.14l12.02-6.94-2.85-2.85-10.27 9.65zm-1.13-19.9C2.03 4.2 2 4.57 2 4.96v14.08c0 .39.03.76.05 1.1l9.08-8.54-9.08-8.74zM20.47 9.8l-2.73-1.58-3.19 3 3.19 3.19 2.76-1.59c.79-.45.79-1.57-.03-2.02zM4.28.1C3.9 0 3.52.05 3.18.24L13.55 10.6l2.85-2.85L4.28.1z"/></svg>
-          <div>
-            <div class="store-badge-label">Get it on</div>
-            <div class="store-badge-name">Google Play</div>
-          </div>
-        </a>
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Hero phone frames -->
-    <div class="hero-phone-row fade-up delay-4">
-      <div class="phone-frame large" style="margin-top:0;">
+
+<hr class="div">
+
+
+<!-- ── SECTION 1: PRIORITY ASSISTANT ── -->
+<section id="priority">
+  <div class="orb" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--purple-glow);opacity:0.4;"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="lbl fade-up">Priority Assistant</span>
+    <h2 class="fade-up d1">Stop guessing.<br><span class="gt">Start doing.</span></h2>
+    <p class="body-text fade-up d2" style="max-width:700px;margin:0 auto 60px;">Priority Assistant is the world's first AI built specifically to rank your tasks in the optimal order — not just by due date, but by everything that matters. It weighs priority, estimated time, your current location, business hours, due date flexibility, task dependencies, and more — then hands you a clear, confident order of what to tackle next. No more decision fatigue. No more staring at a list wondering where to start.</p>
+
+    <!-- 3 phones — upload screenshot-priority-left.png, screenshot-priority.png, screenshot-priority-right.png -->
+    <div class="priority-phones fade-up d3">
+      <div class="phone side tilt-l">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <img 
-              src="screenshot-today.png" 
-              alt="Today / Priority AI screen"
-              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
-              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Today / Priority AI screen</div>
-              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
-              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-today.png</code><br>to your GitHub repo</div>
+          <img src="screenshot-priority-left.png" alt="Priority factors"
+               onerror="this.style.display='none'" />
+          <div class="phone-placeholder">
+            <div class="phone-placeholder-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
             </div>
-        </div>
-              </div>
-              <span class="task-priority med">Med</span>
-            </div>
-            <div class="ai-insight">
-              <div class="ai-insight-label">⚡ Logic Summary</div>
-              Ranked #1 — quick win that unblocks your next task.
-            </div>
-            <div class="task-row">
-              <div class="task-rank">2</div>
-              <div class="task-info">
-                <div class="task-name">Clean grill and furniture</div>
-                <div class="task-meta">Due today · Medium priority</div>
-              </div>
-              <span class="task-priority med">Med</span>
-            </div>
-            <div class="task-row">
-              <div class="task-rank teal">3</div>
-              <div class="task-info">
-                <div class="task-name">Open POOL</div>
-                <div class="task-meta">Due today · High priority</div>
-              </div>
-              <span class="task-priority high">High</span>
-            </div>
-            <div style="margin-top:8px;font-size:8px;color:rgba(255,255,255,0.3);text-align:center;">Ranked by urgency, priority, and task impact</div>
           </div>
+        </div>
+      </div>
+      <div class="phone center">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img src="screenshot-priority.png" alt="Priority Assistant screen"
+               onerror="this.style.display='none'" />
+          <div class="phone-placeholder">
+            <div class="phone-placeholder-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone side tilt-r">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img src="screenshot-priority-right.png" alt="Ranked tasks"
+               onerror="this.style.display='none'" />
+          <div class="phone-placeholder">
+            <div class="phone-placeholder-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <!-- ═══════════════════════════════
-       SECTION 1 — PRIORITY ASSISTANT (largest)
-  ═══════════════════════════════ -->
-  <section id="priority" class="feature-section">
-    <div class="orb orb-purple" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.5;"></div>
-    <div class="container" style="position:relative;z-index:1;">
-      <span class="label fade-up">Priority Assistant</span>
-      <h2 class="fade-up delay-1">Stop guessing.<br><span class="gradient-text">Start doing.</span></h2>
-      <p class="body-text fade-up delay-2">
-        Priority Assistant is the world's first AI built specifically to rank your tasks in the optimal order — not just by due date, but by everything that matters. It weighs priority, estimated time, your current location, business hours, due date flexibility, task dependencies, and more — then hands you a clear, confident order of what to tackle next. No more decision fatigue. No more staring at a list wondering where to start.
-      </p>
+<hr class="div">
 
-      <div class="priority-phones fade-up delay-3">
-        <div class="phone-frame" style="transform:rotate(-5deg);">
+
+<!-- ── SECTION 2: DETAIL ASSISTANT ── -->
+<section id="detail" class="section alt">
+  <div class="orb" style="width:400px;height:400px;top:50%;right:-100px;transform:translateY(-50%);background:var(--teal-glow);opacity:0.3;"></div>
+  <div class="container">
+    <div class="split">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Detail Assistant</span>
+        <h2 class="fade-up d1">Create tasks in seconds.<br><span class="tt">Get all the detail automatically.</span></h2>
+        <p class="fade-up d2">Just describe what you need to do. DaiLY's Detail Assistant fills in the critical fields — priority, due date, estimated time, contact info, location, and more — so your tasks are always complete and actionable from the moment you create them.</p>
+      </div>
+      <!-- upload screenshot-detail.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow teal"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-          <img 
-              src="screenshot-priority.png" 
-              alt="Priority Assistant screen"
-              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
-              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Priority Assistant screen</div>
-              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
-              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-priority.png</code><br>to your GitHub repo</div>
-            </div>
-        </div>
+            <img src="screenshot-detail.png" alt="Detail Assistant screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(62,207,207,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Center — replace with Priority Assistant screenshot -->
-        <div class="phone-frame center">
-          <div class="phone-notch"></div>
-          <div class="phone-screen" style="min-height:480px;">
-          <img 
-              src="screenshot-detail.png" 
-              alt="Detail Assistant screen"
-              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
-              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Detail Assistant screen</div>
-              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
-              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-detail.png</code><br>to your GitHub repo</div>
-            </div>
-        </div>
-              </div>
-              <span class="task-priority med">Med</span>
-            </div>
-            <div class="ai-insight">
-              <div class="ai-insight-label">⚡ Logic Summary</div>
-              Ranked #1 — quick win that unblocks your next task.
-            </div>
-            <div class="task-row">
-              <div class="task-rank">2</div>
-              <div class="task-info">
-                <div class="task-name">Clean grill and furniture</div>
-                <div class="task-meta">Due today · Medium priority</div>
-              </div>
-              <span class="task-priority med">Med</span>
-            </div>
-            <div class="task-row">
-              <div class="task-rank teal">3</div>
-              <div class="task-info">
-                <div class="task-name">Open POOL</div>
-                <div class="task-meta">Due today · High priority</div>
-              </div>
-              <span class="task-priority high">High</span>
-            </div>
-            <div style="margin-top:8px;font-size:8px;color:rgba(255,255,255,0.3);text-align:center;">Ranked by urgency, priority, and task impact</div>
-          </div>
-                        </div>
-          </div>
-        </div>
 
-        <div class="phone-frame" style="transform:rotate(5deg);">
+<hr class="div">
+
+
+<!-- ── SECTION 3: NOTES, FILES & CLOUD ── -->
+<section id="notes" class="section">
+  <div class="orb" style="width:380px;height:380px;top:40%;left:-80px;transform:translateY(-50%);background:var(--purple-glow);opacity:0.2;"></div>
+  <div class="container">
+    <div class="split rev">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Notes, Files &amp; Cloud Backup</span>
+        <h2 class="fade-up d1">Never lose<br><span class="gt">context again.</span></h2>
+        <p class="fade-up d2">Take time-stamped notes directly on any task. Attach files and photos. Back up the entire task to cloud storage for a permanent record — perfect for projects, clients, or anything that matters long-term.</p>
+        <div class="chip-row fade-up d3">
+          <div class="chip">
+            <div class="chip-title">Time-stamped notes</div>
+            <div class="chip-desc">Every note gets a timestamp automatically</div>
+          </div>
+          <div class="chip t">
+            <div class="chip-title">Cloud backup</div>
+            <div class="chip-desc">Permanent records for what matters</div>
+          </div>
+        </div>
+      </div>
+      <!-- upload screenshot-notes.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-          <img 
-              src="screenshot-notes.png" 
-              alt="Notes &amp; Files screen"
-              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
-              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Notes &amp; Files screen</div>
-              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
-              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-notes.png</code><br>to your GitHub repo</div>
-            </div>
-        </div>
-                </div>
-                <span class="task-priority high">High</span>
-              </div>
-              <div class="task-row">
-                <div class="task-rank">2</div>
-                <div class="task-info">
-                  <div class="task-name">Dentist appointment</div>
-                  <div class="task-meta">Today 2pm</div>
-                </div>
-                <span class="task-priority med">Med</span>
-              </div>
-              <div class="task-row">
-                <div class="task-rank teal">3</div>
-                <div class="task-info">
-                  <div class="task-name">Bank deposit</div>
-                  <div class="task-meta">Near you · closes 5pm</div>
-                </div>
-                <span class="task-priority med">Med</span>
-              </div>
-              <div class="ai-insight">
-                <div class="ai-insight-label">⚡ AI Insight</div>
-                Bank closes at 5pm and you're nearby now. Do it before 4:30.
+            <img src="screenshot-notes.png" alt="Notes and files screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <hr class="section-divider">
+<hr class="div">
 
 
-  <!-- ═══════════════════════════════
-       SECTION 2 — DETAIL ASSISTANT
-  ═══════════════════════════════ -->
-  <section id="detail" class="feature-section" style="background:var(--bg-1);">
-    <div class="orb orb-teal" style="width:400px;height:400px;top:50%;right:-100px;transform:translateY(-50%);opacity:0.3;"></div>
-    <div class="container">
-      <div class="split-layout">
-        <div class="feature-copy">
-          <span class="label fade-up">Detail Assistant</span>
-          <h2 class="fade-up delay-1">Create tasks in seconds.<br><span class="teal-text">Get all the detail automatically.</span></h2>
-          <p class="fade-up delay-2">
-            Just describe what you need to do. DaiLY's Detail Assistant fills in the critical fields — priority, due date, estimated time, contact info, location, and more — so your tasks are always complete and actionable from the moment you create them.
-          </p>
-        </div>
-        <div class="feature-visual fade-up delay-2">
-          <div class="glow-ring" style="background:radial-gradient(circle,rgba(62,207,207,0.15) 0%,transparent 70%);"></div>
-          <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" style="min-height:440px;">
-          <img 
-              src="screenshot-tasks.png" 
-              alt="All Tasks / Calendar screen"
-              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
-              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">All Tasks / Calendar screen</div>
-              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
-              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-tasks.png</code><br>to your GitHub repo</div>
-            </div>
-        </div>
-            </div>
-            <div class="ai-insight">
-              <div class="ai-insight-label">✦ Detail Assistant filling in...</div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px;">
-              <div style="background:rgba(123,53,204,0.12);border:0.5px solid rgba(123,53,204,0.3);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
-                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Priority</span>
-                <span style="font-size:8px;font-weight:600;color:#C47FFF;">High</span>
-              </div>
-              <div style="background:rgba(62,207,207,0.10);border:0.5px solid rgba(62,207,207,0.25);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
-                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Due date</span>
-                <span style="font-size:8px;font-weight:600;color:#3ECFCF;">Apr 15 (tax deadline)</span>
-              </div>
-              <div style="background:rgba(123,53,204,0.10);border:0.5px solid rgba(123,53,204,0.2);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
-                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Est. time</span>
-                <span style="font-size:8px;font-weight:600;color:#C47FFF;">30 min</span>
-              </div>
-              <div style="background:rgba(62,207,207,0.08);border:0.5px solid rgba(62,207,207,0.2);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
-                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Contact</span>
-                <span style="font-size:8px;font-weight:600;color:#3ECFCF;">Accountant added</span>
-              </div>
-            </div>
-          </div>
-                        </div>
-            </div>
-          </div>
+<!-- ── SECTION 4: SHARING & COLLABORATION ── -->
+<section id="sharing" class="section alt">
+  <div class="container">
+    <div class="split">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Sharing &amp; Collaboration</span>
+        <h2 class="fade-up d1">Built for teams, families,<br><span class="tt">and everyone in between.</span></h2>
+        <p class="fade-up d2">Share tasks with the people who need them. Assign work, track progress together, and stay in sync — whether you're coordinating a project at work or splitting the to-do list at home.</p>
+        <div class="fade-up d3" style="display:flex;align-items:center;gap:4px;margin-top:16px;">
+          <div class="avatar" style="background:linear-gradient(135deg,#9B55EC,#7B35CC);">D</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#3ECFCF,#2AACAC);margin-left:-8px;">M</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#CC7B35,#CC5035);margin-left:-8px;">J</div>
+          <div class="avatar" style="background:rgba(255,255,255,0.08);color:var(--t2);margin-left:-8px;">+4</div>
+          <span style="font-size:13px;color:var(--t2);margin-left:12px;">Share with your whole team</span>
         </div>
       </div>
-    </div>
-  </section>
-
-
-  <hr class="section-divider">
-
-
-  <!-- ═══════════════════════════════
-       SECTION 3 — NOTES, FILES & CLOUD
-  ═══════════════════════════════ -->
-  <section id="notes" class="feature-section">
-    <div class="orb orb-purple" style="width:380px;height:380px;top:40%;left:-80px;transform:translateY(-50%);opacity:0.25;"></div>
-    <div class="container">
-      <div class="split-layout reverse">
-        <div class="feature-copy">
-          <span class="label fade-up">Notes, Files &amp; Cloud Backup</span>
-          <h2 class="fade-up delay-1">Never lose<br><span class="gradient-text">context again.</span></h2>
-          <p class="fade-up delay-2">
-            Take time-stamped notes directly on any task. Attach files and photos. Back up the entire task to cloud storage for a permanent record — perfect for projects, clients, or anything that matters long-term.
-          </p>
-          <div class="fade-up delay-3" style="display:flex;gap:12px;flex-wrap:wrap;">
-            <div style="background:rgba(123,53,204,0.12);border:0.5px solid rgba(123,53,204,0.3);border-radius:10px;padding:10px 16px;">
-              <div style="font-size:11px;font-weight:700;color:#C47FFF;margin-bottom:2px;">Time-stamped notes</div>
-              <div style="font-size:11px;color:var(--text-2);">Every note gets a timestamp automatically</div>
-            </div>
-            <div style="background:rgba(62,207,207,0.10);border:0.5px solid rgba(62,207,207,0.3);border-radius:10px;padding:10px 16px;">
-              <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:2px;">Cloud backup</div>
-              <div style="font-size:11px;color:var(--text-2);">Permanent records for what matters</div>
-            </div>
-          </div>
-        </div>
-        <div class="feature-visual fade-up delay-2">
-          <div class="glow-ring"></div>
-          <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" style="min-height:440px;">
-          <img src="screenshot-priority-factors.png" alt="Priority factors screen" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);"><div style="font-size:9px;font-weight:700;color:rgba(156,100,240,0.8);text-align:center;text-transform:uppercase;">Priority factors screen</div><div style="font-size:8px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;">Upload <em>screenshot-priority-factors.png</em> to GitHub</div></div>
-              </div>
-            </div>
-            <div style="border-left:2px solid #3ECFCF;border-radius:0 8px 8px 0;background:rgba(255,255,255,0.04);padding:8px 10px;margin-bottom:10px;">
-              <div style="font-size:9px;font-weight:700;color:#fff;">Dave Leone</div>
-              <div style="font-size:7px;color:rgba(255,255,255,0.35);margin-bottom:4px;">Apr 23, 2026 at 11:36 PM</div>
-              <div style="font-size:8.5px;color:rgba(255,255,255,0.7);">Add Notes. Share tasks so others can add notes as well.</div>
-            </div>
-            <div style="background:rgba(123,53,204,0.15);border:0.5px solid rgba(123,53,204,0.4);border-radius:9px;padding:8px 10px;display:flex;align-items:center;gap:6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#9B55EC" stroke-width="1.5"/><path d="M8 12h8M8 16h5" stroke="#9B55EC" stroke-width="1.5"/></svg>
-              <span style="font-size:8.5px;color:#C47FFF;font-weight:600;">View Note Attachments</span>
-            </div>
-          </div>
-                        </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <hr class="section-divider">
-
-
-  <!-- ═══════════════════════════════
-       SECTION 4 — SHARING & COLLABORATION
-  ═══════════════════════════════ -->
-  <section id="sharing" class="feature-section" style="background:var(--bg-1);">
-    <div class="container">
-      <div class="split-layout">
-        <div class="feature-copy">
-          <span class="label fade-up">Sharing &amp; Collaboration</span>
-          <h2 class="fade-up delay-1">Built for teams, families,<br><span class="teal-text">and everyone in between.</span></h2>
-          <p class="fade-up delay-2">
-            Share tasks with the people who need them. Assign work, track progress together, and stay in sync — whether you're coordinating a project at work or splitting the to-do list at home.
-          </p>
-          <div class="fade-up delay-3" style="margin-top:8px;">
-            <div style="display:flex;align-items:center;gap:-8px;margin-bottom:12px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#9B55EC,#7B35CC);border:2px solid var(--bg-1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;">D</div>
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3ECFCF,#2AACAC);border:2px solid var(--bg-1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-left:-8px;">M</div>
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#CC7B35,#CC5035);border:2px solid var(--bg-1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-left:-8px;">J</div>
-              <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid var(--bg-1);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-2);margin-left:-8px;">+4</div>
-              <span style="font-size:13px;color:var(--text-2);margin-left:12px;">Share with your whole team</span>
-            </div>
-          </div>
-        </div>
-        <div class="feature-visual fade-up delay-2">
-          <div class="glow-ring" style="background:radial-gradient(circle,rgba(62,207,207,0.12) 0%,transparent 70%);"></div>
-          <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" style="min-height:440px;">
-          <img src="screenshot-priority.png" alt="Priority Assistant screen" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);"><div style="font-size:9px;font-weight:700;color:rgba(156,100,240,0.8);text-align:center;text-transform:uppercase;">Priority Assistant screen</div><div style="font-size:8px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;">Upload <em>screenshot-priority.png</em> to GitHub</div></div></div>
-                  </div>
-                  <span class="task-priority high">High</span>
-                </div>
-                <div class="task-row">
-                  <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#3ECFCF,#2AACAC);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;">M</div>
-                  <div class="task-info">
-                    <div class="task-name">Review pull request</div>
-                    <div class="task-meta">Assigned to Maya · In progress</div>
-                  </div>
-                  <span class="task-priority med">Med</span>
-                </div>
-                <div class="task-row">
-                  <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#CC7B35,#CC5035);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;">J</div>
-                  <div class="task-info">
-                    <div class="task-name">Update staging server</div>
-                    <div class="task-meta">Assigned to Jake · Done</div>
-                  </div>
-                  <span class="task-priority low">✓</span>
-                </div>
-                <div class="ai-insight" style="margin-top:8px;">
-                  <div class="ai-insight-label">🤝 Team Sync</div>
-                  3 of 5 tasks on track. Jake finished early — reassign his next task?
-                </div>
+      <!-- upload screenshot-sharing.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow teal"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="screenshot-sharing.png" alt="Task sharing screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(62,207,207,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <hr class="section-divider">
+<hr class="div">
 
 
-  <!-- ═══════════════════════════════
-       SECTION 5 — CALENDAR SYNC & LISTS
-  ═══════════════════════════════ -->
-  <section id="calendar" class="feature-section">
-    <div class="orb orb-teal" style="width:360px;height:360px;top:30%;right:-60px;opacity:0.25;"></div>
-    <div class="container">
-      <div class="split-layout reverse">
-        <div class="feature-copy">
-          <span class="label fade-up">Calendar Sync &amp; Lists</span>
-          <h2 class="fade-up delay-1">Focus on what<br><span class="gradient-text">matters right now.</span></h2>
-          <p class="fade-up delay-2">
-            Sync tasks with your calendar so nothing slips through. Group tasks into Lists and switch views on the fly — so you only see what's relevant to the moment, the project, or the role you're in right now.
-          </p>
-        </div>
-        <div class="feature-visual fade-up delay-2">
-          <div class="glow-ring" style="background:radial-gradient(circle,rgba(62,207,207,0.14) 0%,transparent 70%);"></div>
-          <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" style="min-height:440px;">
-          <img src="screenshot-ranked.png" alt="AI ranked tasks screen" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);"><div style="font-size:9px;font-weight:700;color:rgba(156,100,240,0.8);text-align:center;text-transform:uppercase;">AI ranked tasks screen</div><div style="font-size:8px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;">Upload <em>screenshot-ranked.png</em> to GitHub</div></div></div>
+<!-- ── SECTION 5: CALENDAR SYNC & LISTS ── -->
+<section id="calendar" class="section">
+  <div class="orb" style="width:360px;height:360px;top:30%;right:-60px;background:var(--teal-glow);opacity:0.25;"></div>
+  <div class="container">
+    <div class="split rev">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Calendar Sync &amp; Lists</span>
+        <h2 class="fade-up d1">Focus on what<br><span class="gt">matters right now.</span></h2>
+        <p class="fade-up d2">Sync tasks with your calendar so nothing slips through. Group tasks into Lists and switch views on the fly — so you only see what's relevant to the moment, the project, or the role you're in right now.</p>
+      </div>
+      <!-- upload screenshot-calendar.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow teal"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="screenshot-calendar.png" alt="Calendar and lists screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(62,207,207,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
               </div>
-              <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:7px;text-align:center;">
-                <div style="font-size:16px;font-weight:800;color:#fff;">0</div>
-                <div style="font-size:7px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;">Overdue</div>
-              </div>
-              <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:7px;text-align:center;">
-                <div style="font-size:16px;font-weight:800;color:#3ECFCF;">27</div>
-                <div style="font-size:7px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;">Done</div>
-              </div>
-            </div>
-            <div class="task-row" style="border:1px solid rgba(62,207,207,0.3);">
-              <div class="task-info">
-                <div class="task-name">Open POOL</div>
-                <div class="task-meta">Due 04/23 · Projects · SUBTASKS: 2</div>
-              </div>
-              <span class="task-priority high">High</span>
-            </div>
-            <div class="task-row" style="margin-left:12px;border:1px solid rgba(62,207,207,0.2);">
-              <div class="task-info">
-                <div class="task-name">Check hoses</div>
-                <div class="task-meta">Due 04/24 · Subtask</div>
-              </div>
-              <span class="task-priority med">Med</span>
-            </div>
-            <div class="task-row">
-              <div class="task-info">
-                <div class="task-name">Clean grill and furniture</div>
-                <div class="task-meta">Due 04/23 · House Chores</div>
-              </div>
-              <span class="task-priority med">Med</span>
-            </div>
-          </div>
-                        </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <hr class="section-divider">
+<hr class="div">
 
 
-  <!-- ═══════════════════════════════
-       FEATURE GRID
-  ═══════════════════════════════ -->
-  <section id="features-grid">
-    <div class="container">
-      <span class="label fade-up" style="display:block;text-align:center;">Everything you need</span>
-      <h2 class="fade-up delay-1">Built for how you actually work</h2>
-      <p class="fade-up delay-2" style="margin:0 auto 56px;">Six powerful features that work together to make you unstoppable.</p>
-
-      <div class="feat-grid">
-        <div class="feat-card fade-up">
-          <div class="feat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="rgba(123,53,204,0.4)" stroke="#9B55EC" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>AI Priority Ranking</h3>
-          <p>The world's first AI that weighs every factor and tells you exactly what to do next.</p>
-        </div>
-        <div class="feat-card fade-up delay-1">
-          <div class="feat-icon teal-bg">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="#3ECFCF" stroke-width="1.5"/>
-              <path d="M8 12l3 3 5-5" stroke="#3ECFCF" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>Detail Assistant</h3>
-          <p>Describe a task in plain language. AI fills in everything else automatically.</p>
-        </div>
-        <div class="feat-card fade-up delay-2">
-          <div class="feat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#9B55EC" stroke-width="1.5"/>
-              <polyline points="14 2 14 8 20 8" stroke="#9B55EC" stroke-width="1.5"/>
-              <line x1="8" y1="13" x2="16" y2="13" stroke="#9B55EC" stroke-width="1.5"/>
-              <line x1="8" y1="17" x2="13" y2="17" stroke="#9B55EC" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3>Time-Stamped Notes</h3>
-          <p>Log notes on any task with automatic timestamps. Never lose context mid-project.</p>
-        </div>
-        <div class="feat-card fade-up delay-3">
-          <div class="feat-icon teal-bg">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#3ECFCF" stroke-width="1.5"/>
-              <polyline points="17 8 12 3 7 8" stroke="#3ECFCF" stroke-width="1.5"/>
-              <line x1="12" y1="3" x2="12" y2="15" stroke="#3ECFCF" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3>File Attachments &amp; Cloud Backup</h3>
-          <p>Attach files and photos. Back up tasks to the cloud for a permanent, searchable record.</p>
-        </div>
-        <div class="feat-card fade-up delay-4">
-          <div class="feat-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#9B55EC" stroke-width="1.5"/>
-              <circle cx="9" cy="7" r="4" stroke="#9B55EC" stroke-width="1.5"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#9B55EC" stroke-width="1.5" opacity="0.5"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#9B55EC" stroke-width="1.5" opacity="0.5"/>
-            </svg>
-          </div>
-          <h3>Task Sharing &amp; Teams</h3>
-          <p>Share, assign, and track tasks together. Works for work teams, families, and everyone in between.</p>
-        </div>
-        <div class="feat-card fade-up delay-5">
-          <div class="feat-icon teal-bg">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="4" width="18" height="18" rx="2" stroke="#3ECFCF" stroke-width="1.5"/>
-              <line x1="16" y1="2" x2="16" y2="6" stroke="#3ECFCF" stroke-width="1.5"/>
-              <line x1="8" y1="2" x2="8" y2="6" stroke="#3ECFCF" stroke-width="1.5"/>
-              <line x1="3" y1="10" x2="21" y2="10" stroke="#3ECFCF" stroke-width="1.5" opacity="0.5"/>
-              <circle cx="8" cy="15" r="1.5" fill="#3ECFCF"/>
-              <circle cx="12" cy="15" r="1.5" fill="#3ECFCF" opacity="0.5"/>
-              <circle cx="16" cy="15" r="1.5" fill="#3ECFCF" opacity="0.3"/>
-            </svg>
-          </div>
-          <h3>Calendar Sync</h3>
-          <p>Sync tasks with your calendar. Switch lists on the fly to see only what's relevant right now.</p>
-        </div>
+<!-- ── FEATURE GRID ── -->
+<section id="feat-grid">
+  <div class="container">
+    <span class="lbl fade-up" style="display:block;">Everything you need</span>
+    <h2 class="fade-up d1">Built for how you actually work</h2>
+    <p class="fade-up d2">Six powerful features that work together to make you unstoppable.</p>
+    <div class="feat-grid">
+      <div class="feat-card fade-up">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="rgba(123,53,204,0.4)" stroke="#9B55EC" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <h3>AI Priority Ranking</h3>
+        <p>The world's first AI that weighs every factor and tells you exactly what to do next.</p>
+      </div>
+      <div class="feat-card fade-up d1">
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#3ECFCF" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#3ECFCF" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Detail Assistant</h3>
+        <p>Describe a task in plain language. AI fills in everything else automatically.</p>
+      </div>
+      <div class="feat-card fade-up d2">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#9B55EC" stroke-width="1.5"/><line x1="8" y1="13" x2="16" y2="13" stroke="#9B55EC" stroke-width="1.5"/><line x1="8" y1="17" x2="13" y2="17" stroke="#9B55EC" stroke-width="1.5"/></svg></div>
+        <h3>Time-Stamped Notes</h3>
+        <p>Log notes on any task with automatic timestamps. Never lose context mid-project.</p>
+      </div>
+      <div class="feat-card fade-up d3">
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#3ECFCF" stroke-width="1.5"/><polyline points="17 8 12 3 7 8" stroke="#3ECFCF" stroke-width="1.5"/><line x1="12" y1="3" x2="12" y2="15" stroke="#3ECFCF" stroke-width="1.5"/></svg></div>
+        <h3>File Attachments &amp; Cloud</h3>
+        <p>Attach files and photos. Back up tasks to the cloud for a permanent, searchable record.</p>
+      </div>
+      <div class="feat-card fade-up d4">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#9B55EC" stroke-width="1.5"/><circle cx="9" cy="7" r="4" stroke="#9B55EC" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#9B55EC" stroke-width="1.5" opacity="0.5"/></svg></div>
+        <h3>Task Sharing &amp; Teams</h3>
+        <p>Share, assign, and track tasks together. Works for work teams, families, and everyone in between.</p>
+      </div>
+      <div class="feat-card fade-up d4">
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#3ECFCF" stroke-width="1.5"/><line x1="16" y1="2" x2="16" y2="6" stroke="#3ECFCF" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#3ECFCF" stroke-width="1.5"/><line x1="3" y1="10" x2="21" y2="10" stroke="#3ECFCF" stroke-width="1.5" opacity="0.5"/><circle cx="8" cy="15" r="1.5" fill="#3ECFCF"/><circle cx="12" cy="15" r="1.5" fill="#3ECFCF" opacity="0.5"/></svg></div>
+        <h3>Calendar Sync</h3>
+        <p>Sync tasks with your calendar. Switch lists on the fly to see only what's relevant right now.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <!-- ═══════════════════════════════
-       FINAL CTA
-  ═══════════════════════════════ -->
-  <section id="final-cta">
-    <div class="orb orb-purple" style="width:600px;height:600px;bottom:-200px;left:50%;transform:translateX(-50%);opacity:0.5;"></div>
-    <div class="container" style="position:relative;z-index:1;">
-      <span class="label fade-up" style="display:block;">Get started today</span>
-      <h2 class="fade-up delay-1">Your most important work,<br><span class="gradient-text">always at the top.</span></h2>
-      <p class="subhead fade-up delay-2">DaiLY — the world's most advanced task app.</p>
-      <div class="fade-up delay-3">
-        <a href="#" class="btn-final">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          Get Started Free
+<!-- ── FINAL CTA ── -->
+<section id="final-cta">
+  <div class="orb" style="width:600px;height:600px;bottom:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.5;"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="lbl fade-up" style="display:block;">Get started today</span>
+    <h2 class="fade-up d1">Your most important work,<br><span class="gt">always at the top.</span></h2>
+    <p class="subhead fade-up d2" style="margin:0 auto 44px;">D<span style="color:var(--teal)">ai</span>LY — the world's most advanced task app.</p>
+    <div class="fade-up d3">
+      <a href="#" class="btn-final">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Get Started Free
+      </a>
+      <div class="store-badges" style="justify-content:center;margin-top:28px;">
+        <a href="#" class="store-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div><div class="sb-label">Download on the</div><div class="sb-name">App Store</div></div>
         </a>
-        <div class="store-badges-final">
-          <a href="#" class="store-badge">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            <div>
-              <div class="store-badge-label">Download on the</div>
-              <div class="store-badge-name">App Store</div>
-            </div>
-          </a>
-          <a href="#" class="store-badge">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.34.19.73.24 1.1.14l12.02-6.94-2.85-2.85-10.27 9.65zm-1.13-19.9C2.03 4.2 2 4.57 2 4.96v14.08c0 .39.03.76.05 1.1l9.08-8.54-9.08-8.74zM20.47 9.8l-2.73-1.58-3.19 3 3.19 3.19 2.76-1.59c.79-.45.79-1.57-.03-2.02zM4.28.1C3.9 0 3.52.05 3.18.24L13.55 10.6l2.85-2.85L4.28.1z"/></svg>
-            <div>
-              <div class="store-badge-label">Get it on</div>
-              <div class="store-badge-name">Google Play</div>
-            </div>
-          </a>
-        </div>
+        <a href="#" class="store-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.34.19.73.24 1.1.14l12.02-6.94-2.85-2.85-10.27 9.65zm-1.13-19.9C2.03 4.2 2 4.57 2 4.96v14.08c0 .39.03.76.05 1.1l9.08-8.54-9.08-8.74zM20.47 9.8l-2.73-1.58-3.19 3 3.19 3.19 2.76-1.59c.79-.45.79-1.57-.03-2.02zM4.28.1C3.9 0 3.52.05 3.18.24L13.55 10.6l2.85-2.85L4.28.1z"/></svg>
+          <div><div class="sb-label">Get it on</div><div class="sb-name">Google Play</div></div>
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  <!-- ═══════════════════════════════
-       FOOTER
-  ═══════════════════════════════ -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <div class="footer-logo-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M8 13l3 3 5-5" stroke="#3ECFCF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.02em;">D<span style="color:#3ECFCF;">ai</span>LY</span>
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="#3ECFCF" stroke-width="2.5" stroke-linecap="round"/></svg>
         </div>
-        <p class="footer-tagline">The world's most advanced task management app. Built for people who want to get things done.</p>
+        <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.02em;">D<span style="color:#3ECFCF;">ai</span>LY</span>
       </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4>Product</h4>
-          <a href="#priority">Priority AI</a>
-          <a href="#detail">Detail Assistant</a>
-          <a href="#notes">Notes &amp; Files</a>
-          <a href="#sharing">Teams</a>
-          <a href="#calendar">Calendar</a>
-        </div>
-        <div class="footer-col">
-          <h4>Download</h4>
-          <a href="#">App Store</a>
-          <a href="#">Google Play</a>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <a href="#">Help Center</a>
-          <a href="#">Contact Us</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-        </div>
+      <p class="footer-tagline">The world's most advanced task management app. Built for people who want to get things done.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#priority">Priority AI</a>
+        <a href="#detail">Detail Assistant</a>
+        <a href="#notes">Notes &amp; Files</a>
+        <a href="#sharing">Teams</a>
+        <a href="#calendar">Calendar</a>
+      </div>
+      <div class="footer-col">
+        <h4>Download</h4>
+        <a href="#">App Store</a>
+        <a href="#">Google Play</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 DaiLY. All rights reserved.</p>
-      <p>Made with care for people who get things done.</p>
-    </div>
-  </footer>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 DaiLY. All rights reserved.</p>
+    <p>Made for people who get things done.</p>
+  </div>
+</footer>
 
 
-  <script>
-    // Scroll-triggered fade-up animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  document.querySelectorAll('#hero .fade-up').forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 120));
+
+  // Nav shadow on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.08)';
+  });
+
+  // Hide placeholder when image loads successfully
+  document.querySelectorAll('.phone-screen img').forEach(img => {
+    if (img.complete && img.naturalWidth > 0) {
+      const ph = img.nextElementSibling;
+      if (ph) ph.style.display = 'none';
+    } else {
+      img.addEventListener('load', () => {
+        const ph = img.nextElementSibling;
+        if (ph) ph.style.display = 'none';
       });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // Hero elements visible immediately
-    document.querySelectorAll('#hero .fade-up').forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), i * 120);
-    });
-
-    // Nav scroll styling
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        nav.style.borderBottomColor = 'rgba(255,255,255,0.1)';
-      } else {
-        nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
-      }
-    });
-  </script>
-
+    }
+  });
+</script>
 
 </body>
 </html>
