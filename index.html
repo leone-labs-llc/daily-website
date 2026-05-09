@@ -436,10 +436,7 @@
       transition: border-color 0.2s, background 0.2s;
       position: relative;
     }
-    .screenshot-note:hover, .screenshot-note.drag-over {
-      border-color: rgba(123,53,204,0.7);
-      background: linear-gradient(160deg, #0F0F2A 0%, #131335 100%);
-    }
+    
     .screenshot-note .sn-label {
       font-size: 10px; font-weight: 700; color: rgba(156,100,240,0.85);
       text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
@@ -466,20 +463,6 @@
     .screenshot-note img.dropped {
       width: 100%; height: 100%; object-fit: cover;
       border-radius: 24px; display: block;
-    }
-
-    /* Info banner */
-    #screenshot-banner {
-      position: fixed; bottom: 20px; right: 20px; z-index: 200;
-      background: rgba(13,13,26,0.95); border: 0.5px solid rgba(123,53,204,0.5);
-      border-radius: 14px; padding: 14px 18px; max-width: 260px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    }
-    #screenshot-banner h4 { font-size: 12px; font-weight: 700; color: #C47FFF; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
-    #screenshot-banner p { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 8px; }
-    #screenshot-banner button {
-      font-size: 10px; color: rgba(255,255,255,0.3); background: none;
-      border: none; cursor: pointer; padding: 0; text-decoration: underline;
     }
   </style>
 </head>
@@ -555,12 +538,42 @@
       <div class="phone-frame large" style="margin-top:0;">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <div class="screenshot-note" data-slot="hero">
-            <input type="file" accept="image/*">
-            <div class="sn-drop-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(156,100,240,0.8)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-            <div class="sn-label">Screenshot — Today / Priority AI screen</div>
-            <div class="sn-dashed"></div>
-            <div class="sn-desc">Drop or click to load your app screenshot</div>
+          <img 
+              src="screenshot-today.png" 
+              alt="Today / Priority AI screen"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
+              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Today / Priority AI screen</div>
+              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-today.png</code><br>to your GitHub repo</div>
+            </div>
+        </div>
+              </div>
+              <span class="task-priority med">Med</span>
+            </div>
+            <div class="ai-insight">
+              <div class="ai-insight-label">⚡ Logic Summary</div>
+              Ranked #1 — quick win that unblocks your next task.
+            </div>
+            <div class="task-row">
+              <div class="task-rank">2</div>
+              <div class="task-info">
+                <div class="task-name">Clean grill and furniture</div>
+                <div class="task-meta">Due today · Medium priority</div>
+              </div>
+              <span class="task-priority med">Med</span>
+            </div>
+            <div class="task-row">
+              <div class="task-rank teal">3</div>
+              <div class="task-info">
+                <div class="task-name">Open POOL</div>
+                <div class="task-meta">Due today · High priority</div>
+              </div>
+              <span class="task-priority high">High</span>
+            </div>
+            <div style="margin-top:8px;font-size:8px;color:rgba(255,255,255,0.3);text-align:center;">Ranked by urgency, priority, and task impact</div>
+          </div>
           </div>
         </div>
       </div>
@@ -584,26 +597,17 @@
         <div class="phone-frame" style="transform:rotate(-5deg);">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <div class="app-screen">
-              <div class="app-screen-header" style="margin-bottom:10px;">
-                <span class="app-screen-title">Factors Weighted</span>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:7px;">
-                <div style="background:rgba(123,53,204,0.15);border:0.5px solid rgba(123,53,204,0.3);border-radius:8px;padding:7px 9px;font-size:9px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;">
-                  <span style="font-size:11px;">📍</span> Current location
-                </div>
-                <div style="background:rgba(123,53,204,0.12);border:0.5px solid rgba(123,53,204,0.25);border-radius:8px;padding:7px 9px;font-size:9px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;">
-                  <span style="font-size:11px;">🕐</span> Business hours
-                </div>
-                <div style="background:rgba(62,207,207,0.12);border:0.5px solid rgba(62,207,207,0.25);border-radius:8px;padding:7px 9px;font-size:9px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;">
-                  <span style="font-size:11px;">🔗</span> Task dependencies
-                </div>
-                <div style="background:rgba(62,207,207,0.10);border:0.5px solid rgba(62,207,207,0.2);border-radius:8px;padding:7px 9px;font-size:9px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;">
-                  <span style="font-size:11px;">⏱</span> Estimated duration
-                </div>
-                <div style="background:rgba(123,53,204,0.10);border:0.5px solid rgba(123,53,204,0.2);border-radius:8px;padding:7px 9px;font-size:9px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;">
-                  <span style="font-size:11px;">📅</span> Due date flexibility
-                </div>
+          <img 
+              src="screenshot-priority.png" 
+              alt="Priority Assistant screen"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
+              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Priority Assistant screen</div>
+              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-priority.png</code><br>to your GitHub repo</div>
+            </div>
+        </div>
               </div>
             </div>
           </div>
@@ -613,12 +617,42 @@
         <div class="phone-frame center">
           <div class="phone-notch"></div>
           <div class="phone-screen" style="min-height:480px;">
-          <div class="screenshot-note" data-slot="priority" style="min-height:480px;">
-                          <input type="file" accept="image/*">
-                          <div class="sn-drop-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(156,100,240,0.8)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-                          <div class="sn-label">Screenshot 2 — Today / Priority AI</div>
-                          <div class="sn-dashed"></div>
-                          <div class="sn-desc">Drop or click to load<br>the AI task ranking screen</div>
+          <img 
+              src="screenshot-detail.png" 
+              alt="Detail Assistant screen"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
+              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Detail Assistant screen</div>
+              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-detail.png</code><br>to your GitHub repo</div>
+            </div>
+        </div>
+              </div>
+              <span class="task-priority med">Med</span>
+            </div>
+            <div class="ai-insight">
+              <div class="ai-insight-label">⚡ Logic Summary</div>
+              Ranked #1 — quick win that unblocks your next task.
+            </div>
+            <div class="task-row">
+              <div class="task-rank">2</div>
+              <div class="task-info">
+                <div class="task-name">Clean grill and furniture</div>
+                <div class="task-meta">Due today · Medium priority</div>
+              </div>
+              <span class="task-priority med">Med</span>
+            </div>
+            <div class="task-row">
+              <div class="task-rank teal">3</div>
+              <div class="task-info">
+                <div class="task-name">Open POOL</div>
+                <div class="task-meta">Due today · High priority</div>
+              </div>
+              <span class="task-priority high">High</span>
+            </div>
+            <div style="margin-top:8px;font-size:8px;color:rgba(255,255,255,0.3);text-align:center;">Ranked by urgency, priority, and task impact</div>
+          </div>
                         </div>
           </div>
         </div>
@@ -626,16 +660,17 @@
         <div class="phone-frame" style="transform:rotate(5deg);">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <div class="app-screen">
-              <div class="app-screen-header">
-                <span class="app-screen-title">Ranked Tasks</span>
-                <span class="app-screen-badge">AI Ranked</span>
-              </div>
-              <div class="task-row">
-                <div class="task-rank">1</div>
-                <div class="task-info">
-                  <div class="task-name">Client proposal</div>
-                  <div class="task-meta">Blocks 2 tasks</div>
+          <img 
+              src="screenshot-notes.png" 
+              alt="Notes &amp; Files screen"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
+              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">Notes &amp; Files screen</div>
+              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-notes.png</code><br>to your GitHub repo</div>
+            </div>
+        </div>
                 </div>
                 <span class="task-priority high">High</span>
               </div>
@@ -689,12 +724,40 @@
           <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
             <div class="phone-notch"></div>
             <div class="phone-screen" style="min-height:440px;">
-          <div class="screenshot-note" data-slot="detail" style="min-height:440px;">
-                          <input type="file" accept="image/*">
-                          <div class="sn-drop-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(156,100,240,0.8)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-                          <div class="sn-label">Detail Assistant screenshot</div>
-                          <div class="sn-dashed"></div>
-                          <div class="sn-desc">Drop or click to load<br>the task creation / AI fill screen</div>
+          <img 
+              src="screenshot-tasks.png" 
+              alt="All Tasks / Calendar screen"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            /><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);">
+              <div style="font-size:10px;font-weight:700;color:rgba(156,100,240,0.8);text-transform:uppercase;letter-spacing:0.1em;text-align:center;">All Tasks / Calendar screen</div>
+              <div style="width:60%;height:1px;border-top:1px dashed rgba(123,53,204,0.3);"></div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;">Upload <code style="color:rgba(156,100,240,0.7);">screenshot-tasks.png</code><br>to your GitHub repo</div>
+            </div>
+        </div>
+            </div>
+            <div class="ai-insight">
+              <div class="ai-insight-label">✦ Detail Assistant filling in...</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px;">
+              <div style="background:rgba(123,53,204,0.12);border:0.5px solid rgba(123,53,204,0.3);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
+                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Priority</span>
+                <span style="font-size:8px;font-weight:600;color:#C47FFF;">High</span>
+              </div>
+              <div style="background:rgba(62,207,207,0.10);border:0.5px solid rgba(62,207,207,0.25);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
+                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Due date</span>
+                <span style="font-size:8px;font-weight:600;color:#3ECFCF;">Apr 15 (tax deadline)</span>
+              </div>
+              <div style="background:rgba(123,53,204,0.10);border:0.5px solid rgba(123,53,204,0.2);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
+                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Est. time</span>
+                <span style="font-size:8px;font-weight:600;color:#C47FFF;">30 min</span>
+              </div>
+              <div style="background:rgba(62,207,207,0.08);border:0.5px solid rgba(62,207,207,0.2);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;">
+                <span style="font-size:8px;color:rgba(255,255,255,0.5);">Contact</span>
+                <span style="font-size:8px;font-weight:600;color:#3ECFCF;">Accountant added</span>
+              </div>
+            </div>
+          </div>
                         </div>
             </div>
           </div>
@@ -736,12 +799,19 @@
           <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
             <div class="phone-notch"></div>
             <div class="phone-screen" style="min-height:440px;">
-          <div class="screenshot-note" data-slot="notes" style="min-height:440px;">
-                          <input type="file" accept="image/*">
-                          <div class="sn-drop-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(156,100,240,0.8)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-                          <div class="sn-label">Screenshot 1 — Notes &amp; Files</div>
-                          <div class="sn-dashed"></div>
-                          <div class="sn-desc">Drop or click to load<br>the task detail / notes screen</div>
+          <img src="screenshot-priority-factors.png" alt="Priority factors screen" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);"><div style="font-size:9px;font-weight:700;color:rgba(156,100,240,0.8);text-align:center;text-transform:uppercase;">Priority factors screen</div><div style="font-size:8px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;">Upload <em>screenshot-priority-factors.png</em> to GitHub</div></div>
+              </div>
+            </div>
+            <div style="border-left:2px solid #3ECFCF;border-radius:0 8px 8px 0;background:rgba(255,255,255,0.04);padding:8px 10px;margin-bottom:10px;">
+              <div style="font-size:9px;font-weight:700;color:#fff;">Dave Leone</div>
+              <div style="font-size:7px;color:rgba(255,255,255,0.35);margin-bottom:4px;">Apr 23, 2026 at 11:36 PM</div>
+              <div style="font-size:8.5px;color:rgba(255,255,255,0.7);">Add Notes. Share tasks so others can add notes as well.</div>
+            </div>
+            <div style="background:rgba(123,53,204,0.15);border:0.5px solid rgba(123,53,204,0.4);border-radius:9px;padding:8px 10px;display:flex;align-items:center;gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#9B55EC" stroke-width="1.5"/><path d="M8 12h8M8 16h5" stroke="#9B55EC" stroke-width="1.5"/></svg>
+              <span style="font-size:8.5px;color:#C47FFF;font-weight:600;">View Note Attachments</span>
+            </div>
+          </div>
                         </div>
             </div>
           </div>
@@ -781,16 +851,7 @@
           <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
             <div class="phone-notch"></div>
             <div class="phone-screen" style="min-height:440px;">
-              <div class="app-screen">
-                <div class="app-screen-header">
-                  <span class="app-screen-title">Shared Tasks</span>
-                  <span class="app-screen-badge">Team</span>
-                </div>
-                <div class="task-row">
-                  <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#9B55EC,#7B35CC);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;">D</div>
-                  <div class="task-info">
-                    <div class="task-name">Write API documentation</div>
-                    <div class="task-meta">Assigned to you</div>
+          <img src="screenshot-priority.png" alt="Priority Assistant screen" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);"><div style="font-size:9px;font-weight:700;color:rgba(156,100,240,0.8);text-align:center;text-transform:uppercase;">Priority Assistant screen</div><div style="font-size:8px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;">Upload <em>screenshot-priority.png</em> to GitHub</div></div></div>
                   </div>
                   <span class="task-priority high">High</span>
                 </div>
@@ -845,12 +906,39 @@
           <div class="phone-frame" style="width:250px;position:relative;z-index:1;">
             <div class="phone-notch"></div>
             <div class="phone-screen" style="min-height:440px;">
-          <div class="screenshot-note" data-slot="calendar" style="min-height:440px;">
-                          <input type="file" accept="image/*">
-                          <div class="sn-drop-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(156,100,240,0.8)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-                          <div class="sn-label">Screenshot 3 — All Tasks / Lists</div>
-                          <div class="sn-dashed"></div>
-                          <div class="sn-desc">Drop or click to load<br>the All Tasks or calendar screen</div>
+          <img src="screenshot-ranked.png" alt="AI ranked tasks screen" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:26px;display:block;min-height:400px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/><div style="display:none;width:100%;min-height:400px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;background:linear-gradient(160deg,#0C0C22,#101028);"><div style="font-size:9px;font-weight:700;color:rgba(156,100,240,0.8);text-align:center;text-transform:uppercase;">AI ranked tasks screen</div><div style="font-size:8px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;">Upload <em>screenshot-ranked.png</em> to GitHub</div></div></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:7px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#fff;">0</div>
+                <div style="font-size:7px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;">Overdue</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:7px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#3ECFCF;">27</div>
+                <div style="font-size:7px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;">Done</div>
+              </div>
+            </div>
+            <div class="task-row" style="border:1px solid rgba(62,207,207,0.3);">
+              <div class="task-info">
+                <div class="task-name">Open POOL</div>
+                <div class="task-meta">Due 04/23 · Projects · SUBTASKS: 2</div>
+              </div>
+              <span class="task-priority high">High</span>
+            </div>
+            <div class="task-row" style="margin-left:12px;border:1px solid rgba(62,207,207,0.2);">
+              <div class="task-info">
+                <div class="task-name">Check hoses</div>
+                <div class="task-meta">Due 04/24 · Subtask</div>
+              </div>
+              <span class="task-priority med">Med</span>
+            </div>
+            <div class="task-row">
+              <div class="task-info">
+                <div class="task-name">Clean grill and furniture</div>
+                <div class="task-meta">Due 04/23 · House Chores</div>
+              </div>
+              <span class="task-priority med">Med</span>
+            </div>
+          </div>
                         </div>
             </div>
           </div>
@@ -1057,74 +1145,6 @@
     });
   </script>
 
-  <\!-- Screenshot drop-zone banner -->
-  <div id="screenshot-banner">
-    <h4>&#x1F4F8; Add Your Screenshots</h4>
-    <p>Click any dashed phone frame — or drag a screenshot onto it — to preview your real app UI.</p>
-    <p style="margin-top:4px;color:rgba(156,100,240,0.75);font-size:11px;">
-      Frame 1 &amp; 2: Today / Priority AI screen<br>
-      Frame 3: Notes &amp; Files screen<br>
-      Frame 4: All Tasks / Lists screen
-    </p>
-    <button onclick="document.getElementById('screenshot-banner').style.display='none'">Dismiss</button>
-  </div>
-
-  <script>
-    (function() {
-      document.querySelectorAll('.screenshot-note').forEach(function(zone) {
-        var input = zone.querySelector('input[type="file"]');
-
-        function loadImage(file) {
-          if (\!file || \!file.type.startsWith('image/')) return;
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            var minH = zone.style.minHeight || '380px';
-            zone.innerHTML = '';
-            zone.style.border = 'none';
-            zone.style.padding = '0';
-            zone.style.minHeight = minH;
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:24px;display:block;min-height:' + minH + ';cursor:pointer;';
-            img.title = 'Click to replace';
-            zone.appendChild(img);
-            img.addEventListener('click', function() {
-              var inp2 = document.createElement('input');
-              inp2.type = 'file';
-              inp2.accept = 'image/*';
-              inp2.style.display = 'none';
-              inp2.addEventListener('change', function(ev) {
-                if (ev.target.files[0]) loadImage(ev.target.files[0]);
-              });
-              document.body.appendChild(inp2);
-              inp2.click();
-            });
-          };
-          reader.readAsDataURL(file);
-        }
-
-        if (input) {
-          input.addEventListener('change', function(e) {
-            if (e.target.files[0]) loadImage(e.target.files[0]);
-          });
-        }
-
-        zone.addEventListener('dragover', function(e) {
-          e.preventDefault();
-          zone.classList.add('drag-over');
-        });
-        zone.addEventListener('dragleave', function() {
-          zone.classList.remove('drag-over');
-        });
-        zone.addEventListener('drop', function(e) {
-          e.preventDefault();
-          zone.classList.remove('drag-over');
-          var file = e.dataTransfer.files[0];
-          if (file) loadImage(file);
-        });
-      });
-    })();
-  </script>
 
 </body>
 </html>
