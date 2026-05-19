@@ -4,15 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5" />
   <title>DaiLY — The World's Most Advanced Task App</title>
-
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="app-icon.png" />
   <link rel="apple-touch-icon" href="app-icon.png" />
-
   <!-- SEO -->
   <meta name="description" content="DaiLY uses a Prioritization Engine to rank your tasks in the optimal order — so you always know exactly what to do next. Priority Assist, Detail Assistant, and more." />
   <meta name="theme-color" content="#7B35CC" />
-
   <!-- Open Graph (iMessage, Slack, Facebook, etc.) -->
   <meta property="og:title" content="DaiLY — The World's Most Advanced Task App" />
   <meta property="og:description" content="Prioirty Assist solves analysis paralysis. Stop guessing. Start doing." />
@@ -20,7 +17,6 @@
   <meta property="og:url" content="https://leone-labs.com" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="DaiLY" />
-
   <!-- Twitter / X Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="DaiLY — The World's Most Advanced Task App" />
@@ -30,7 +26,6 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #08080F; color: #fff; line-height: 1.6; overflow-x: hidden; }
-
     :root {
       --purple: #7B35CC; --purple-b: #9B55EC;
       --purple-glow: rgba(123,53,204,0.35);
@@ -39,31 +34,25 @@
       --border: rgba(255,255,255,0.08); --ba: rgba(123,53,204,0.4);
       --t2: rgba(255,255,255,0.62); --t3: rgba(255,255,255,0.38);
     }
-
     h1 { font-size: clamp(2.4rem,6vw,4.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
     h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
     h3 { font-size: clamp(1.1rem,2vw,1.5rem); font-weight: 600; letter-spacing: -0.02em; }
     p  { font-size: clamp(0.95rem,1.8vw,1.1rem); color: var(--t2); line-height: 1.75; }
-
     .gt { background: linear-gradient(135deg,#C47FFF,#7B35CC,#3ECFCF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .tt { color: var(--teal); }
     .lbl { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
-
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
     .orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
-
     /* ── NAV ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; background: rgba(8,8,15,0.8); backdrop-filter: blur(18px); border-bottom: 0.5px solid var(--border); }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo-icon { width: 34px; height: 34px; border-radius: 9px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
     .nav-wordmark { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
-    .nav-wordmark span { color: var(--teal); }
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a { font-size: 13.5px; color: var(--t2); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: #fff; }
     .nav-cta { background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 9px 22px; font-size: 13.5px; font-weight: 600; cursor: pointer; text-decoration: none; transition: opacity 0.2s,transform 0.15s; }
     .nav-cta:hover { opacity: 0.88; transform: scale(1.02); }
-
     /* ── HERO ── */
     #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; background: radial-gradient(ellipse 70% 60% at 50% 0%,rgba(123,53,204,0.22) 0%,transparent 70%), radial-gradient(ellipse 40% 40% at 80% 80%,rgba(62,207,207,0.10) 0%,transparent 60%), var(--bg0); position: relative; overflow: hidden; }
     .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(123,53,204,0.15); border: 0.5px solid var(--ba); border-radius: 50px; padding: 6px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #C47FFF; text-transform: uppercase; margin-bottom: 28px; }
@@ -77,7 +66,6 @@
     .store-badge:hover { background: rgba(255,255,255,0.10); }
     .sb-label { font-size: 9px; color: var(--t2); margin-bottom: 1px; }
     .sb-name  { font-size: 14px; font-weight: 600; color: #fff; }
-
     /* ── PHONE FRAMES ── */
     .phone-row { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 64px; position: relative; z-index: 1; }
     .phone { background: #0E0E20; border-radius: 42px; border: 1.5px solid rgba(255,255,255,0.12); padding: 14px 10px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); position: relative; }
@@ -88,17 +76,14 @@
     .phone-notch  { width: 80px; height: 22px; background: #08080F; border-radius: 0 0 16px 16px; margin: 0 auto 10px; }
     .phone-screen { border-radius: 28px; overflow: hidden; background: #0C0C22; min-height: 400px; display: flex; align-items: stretch; }
     .phone.center .phone-screen { min-height: 480px; }
-
     /* screenshot img inside phone */
     .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; min-height: 400px; }
     .phone.center .phone-screen img { min-height: 480px; }
-
     /* clean dark placeholder when image missing — NO text shown to visitors */
     .phone-screen img[src=""] , .phone-screen img:not([src]) { display: none; }
     .phone-placeholder { width: 100%; min-height: 400px; display: flex; align-items: center; justify-content: center; background: linear-gradient(160deg,#0C0C22,#101028); }
     .phone.center .phone-placeholder { min-height: 480px; }
     .phone-placeholder-inner { width: 48px; height: 48px; border-radius: 14px; background: rgba(123,53,204,0.15); border: 1px solid rgba(123,53,204,0.25); display: flex; align-items: center; justify-content: center; }
-
     /* ── SECTIONS ── */
     .section { padding: 110px 0; position: relative; overflow: hidden; }
     .section.alt { background: var(--bg1); }
@@ -111,14 +96,12 @@
     .phone-vis { display: flex; justify-content: center; position: relative; }
     .glow { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle,rgba(123,53,204,0.18) 0%,transparent 70%); pointer-events: none; }
     .glow.teal { background: radial-gradient(circle,rgba(62,207,207,0.15) 0%,transparent 70%); }
-
     /* priority section */
     #priority { padding: 130px 0; background: linear-gradient(180deg,var(--bg0),var(--bg1),var(--bg0)); }
     #priority .container { text-align: center; }
     #priority h2 { font-size: clamp(2.2rem,5vw,3.8rem); max-width: 700px; margin: 0 auto 20px; }
     #priority .body-text { max-width: 700px; margin: 0 auto 60px; }
     .priority-phones { display: flex; justify-content: center; align-items: flex-end; gap: 20px; }
-
     /* feature grid */
     #feat-grid { background: var(--bg1); padding: 100px 0; }
     #feat-grid .container { text-align: center; }
@@ -131,14 +114,12 @@
     .feat-icon.t { background: rgba(62,207,207,0.12); border-color: rgba(62,207,207,0.3); }
     .feat-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
     .feat-card p  { font-size: 13px; color: var(--t2); line-height: 1.6; }
-
     /* CTA */
     #final-cta { padding: 130px 0; text-align: center; background: radial-gradient(ellipse 80% 60% at 50% 100%,rgba(123,53,204,0.22) 0%,transparent 70%), var(--bg0); position: relative; overflow: hidden; }
     #final-cta h2 { max-width: 680px; margin: 0 auto 16px; font-size: clamp(2rem,5vw,3.6rem); }
     #final-cta .subhead { max-width: 440px; }
     .btn-final { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 16px 44px; font-size: 17px; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 0 50px rgba(123,53,204,0.5); margin-bottom: 28px; transition: opacity 0.2s,transform 0.15s; }
     .btn-final:hover { opacity: 0.9; transform: translateY(-2px); }
-
     /* footer */
     footer { background: #05050D; border-top: 0.5px solid var(--border); padding: 48px 32px 36px; }
     .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; }
@@ -151,13 +132,11 @@
     .footer-col a:hover { color: #fff; }
     .footer-bottom { max-width: 1100px; margin: 32px auto 0; padding-top: 20px; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .footer-bottom p { font-size: 12px; color: var(--t3); }
-
     /* animations */
     .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease,transform 0.7s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     .fade-up.d1 { transition-delay: 0.1s; } .fade-up.d2 { transition-delay: 0.2s; }
     .fade-up.d3 { transition-delay: 0.3s; } .fade-up.d4 { transition-delay: 0.4s; }
-
     /* chips */
     .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
     .chip { background: rgba(123,53,204,0.12); border: 0.5px solid rgba(123,53,204,0.3); border-radius: 10px; padding: 9px 14px; }
@@ -165,10 +144,8 @@
     .chip-title { font-size: 11px; font-weight: 700; color: #C47FFF; margin-bottom: 2px; }
     .chip.t .chip-title { color: var(--teal); }
     .chip-desc  { font-size: 11px; color: var(--t2); }
-
     /* team avatars */
     .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 2px solid var(--bg1); flex-shrink: 0; }
-
     /* ── SUPPORT MODAL ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 999;
@@ -197,13 +174,11 @@
     }
     .modal-close:hover { background: rgba(255,255,255,0.13); color: #fff; }
     .modal-body { padding: 24px 28px 28px; }
-
     /* Progress dots */
     .modal-progress { display: flex; align-items: center; gap: 8px; padding: 16px 28px 0; }
     .progress-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: background 0.3s, width 0.3s; }
     .progress-dot.active { background: var(--purple-b); width: 22px; border-radius: 4px; }
     .progress-dot.done { background: var(--teal); }
-
     /* CAPTCHA STEP */
     .captcha-wrap { text-align: center; padding: 8px 0 4px; }
     .captcha-badge {
@@ -228,7 +203,6 @@
     .captcha-input:focus { border-color: rgba(123,53,204,0.6); }
     .captcha-error { color: #FF6B6B; font-size: 12.5px; margin-top: 8px; display: none; text-align: center; }
     .captcha-error.show { display: block; }
-
     /* FORM STEP */
     .form-step { display: none; }
     .form-step.active { display: block; }
@@ -263,7 +237,6 @@
     .form-field input.err,
     .form-field select.err,
     .form-field textarea.err { border-color: rgba(255,107,107,0.6); }
-
     /* File Upload */
     .file-upload-area {
       border: 1px dashed rgba(123,53,204,0.4); border-radius: 12px;
@@ -282,7 +255,6 @@
     .file-upload-name { font-size: 12.5px; color: var(--teal); margin-top: 8px; display: none; font-weight: 600; }
     .file-error { color: #FF6B6B; font-size: 12px; margin-top: 6px; display: none; }
     .file-error.show { display: block; }
-
     /* Modal Buttons */
     .modal-actions { display: flex; gap: 12px; margin-top: 22px; }
     .btn-modal-cancel {
@@ -308,7 +280,6 @@
       box-shadow: 0 0 24px rgba(123,53,204,0.4); font-family: inherit;
     }
     .btn-modal-next:hover { opacity: 0.88; transform: translateY(-1px); }
-
     /* Success state */
     .modal-success { text-align: center; padding: 12px 0 8px; display: none; }
     .modal-success.show { display: block; }
@@ -322,7 +293,6 @@
       cursor: pointer; font-family: inherit; transition: opacity 0.2s;
     }
     .btn-success-close:hover { opacity: 0.88; }
-
     @media(max-width:800px) {
       .split { grid-template-columns: 1fr; gap: 48px; }
       .split.rev { direction: ltr; }
@@ -356,11 +326,9 @@
   </style>
 </head>
 <body>
-
 <!-- ── SUPPORT MODAL ── -->
 <div class="modal-overlay" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-box" id="modalBox">
-
     <!-- STEP 1: CAPTCHA -->
     <div id="stepCaptcha">
       <div class="modal-header">
@@ -392,7 +360,6 @@
         <button class="btn-modal-next" onclick="verifyCaptcha()">Verify &amp; Continue →</button>
       </div>
     </div>
-
     <!-- STEP 2: CONTACT FORM -->
     <div id="stepForm" class="form-step">
       <div class="modal-header">
@@ -422,7 +389,6 @@
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_next" value="https://leone-labs.com" />
           <input type="hidden" name="_autoresponse" value="Thank you for contacting DaiLY Support! We've received your message and will get back to you shortly." />
-
           <div class="form-row">
             <div class="form-field">
               <label for="firstName">First Name *</label>
@@ -435,7 +401,6 @@
               <div class="field-error-msg" id="errLastName">Please enter your last name</div>
             </div>
           </div>
-
           <div class="form-field">
             <label for="appVersion">App Version *</label>
             <select id="appVersion" name="App Version">
@@ -445,13 +410,11 @@
             </select>
             <div class="field-error-msg" id="errAppVersion">Please select a platform</div>
           </div>
-
           <div class="form-field">
             <label for="description">Describe the Problem *</label>
             <textarea id="description" name="Problem Description" placeholder="Please describe the issue you're experiencing in as much detail as possible…"></textarea>
             <div class="field-error-msg" id="errDescription">Please describe the problem</div>
           </div>
-
           <div class="form-field">
             <label>Screenshot (Optional)</label>
             <div class="file-upload-area" id="fileUploadArea">
@@ -473,7 +436,6 @@
             </div>
             <div class="file-error" id="fileError">Only PNG or JPG files are accepted</div>
           </div>
-
           <div class="modal-actions">
             <a href="https://leone-labs.com" class="btn-modal-cancel" id="cancelBtn">Cancel</a>
             <button type="submit" class="btn-modal-send" id="sendBtn">
@@ -484,7 +446,6 @@
         </form>
       </div>
     </div>
-
     <!-- STEP 3: SUCCESS -->
     <div id="stepSuccess" class="form-step">
       <div class="modal-header" style="justify-content:flex-end;">
@@ -499,16 +460,13 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
-
-
 <!-- ── NAV ── -->
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-icon"><img src="app-icon.png" alt="DaiLY" style="width:34px;height:34px;object-fit:cover;border-radius:9px;display:block;" /></div>
-    <span class="nav-wordmark">D<span>ai</span>LY</span>
+    <span class="nav-wordmark">DaiLY</span>
   </a>
   <ul class="nav-links">
     <li><a href="#priority">Priority AI</a></li>
@@ -518,21 +476,16 @@
     <li><a href="#calendar">Calendar</a></li>
   </ul>
 </nav>
-
-
 <!-- ── HERO ── -->
 <section id="hero">
   <div class="orb" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.6;"></div>
   <div class="orb" style="width:300px;height:300px;bottom:80px;right:10%;background:var(--teal-glow);opacity:0.4;"></div>
-
   <span class="eyebrow fade-up">
     <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#C47FFF"/></svg>
     World's first Intelligent task prioritization
   </span>
-
   <h1 class="fade-up d1">Meet <br><span class="gt">Priority<br>Assist.</span></h1>
   <p class="subhead fade-up d2">Re-order tasks to maximize your time! <br> No more analysis paralysis!</p>
-
   <div class="hero-cta-group fade-up d3">
     <a href="#" class="btn-hero">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -549,7 +502,6 @@
       </a>
     </div>
   </div>
-
   <!-- Single hero phone — upload screenshot-hero.png to GitHub -->
   <div class="phone-row fade-up d4">
     <div class="phone center">
@@ -566,11 +518,7 @@
     </div>
   </div>
 </section>
-
-
 <hr class="div">
-
-
 <!-- ── SECTION 1: PRIORITY ASSIST ── -->
 <section id="priority">
   <div class="orb" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--purple-glow);opacity:0.4;"></div>
@@ -578,7 +526,6 @@
     <span class="lbl fade-up">Priority Assist</span>
     <h2 class="fade-up d1">Stop guessing.<br><span class="gt">Start doing.</span></h2>
     <p class="body-text fade-up d2" style="max-width:700px;margin:0 auto 60px;">Priority Assist is the world's first Prioritization Engine built specifically to rank your tasks in the optimal order — not just by due date, but by everything that matters. It weighs priority, estimated time, your current location, business hours, due date flexibility, task dependencies, and more — then hands you a clear, confident order of what to tackle next. No more decision fatigue. No more staring at a list wondering where to start.</p>
-
     <!-- 3 phones — upload screenshot-priority-left.png, screenshot-priority.png, screenshot-priority-right.png -->
     <div class="priority-phones fade-up d3">
       <div class="phone side tilt-l">
@@ -620,11 +567,7 @@
     </div>
   </div>
 </section>
-
-
 <hr class="div">
-
-
 <!-- ── SECTION 2: DETAIL ASSISTANT ── -->
 <section id="detail" class="section alt">
   <div class="orb" style="width:400px;height:400px;top:50%;right:-100px;transform:translateY(-50%);background:var(--teal-glow);opacity:0.3;"></div>
@@ -654,11 +597,7 @@
     </div>
   </div>
 </section>
-
-
 <hr class="div">
-
-
 <!-- ── SECTION 3: NOTES, FILES & CLOUD ── -->
 <section id="notes" class="section">
   <div class="orb" style="width:380px;height:380px;top:40%;left:-80px;transform:translateY(-50%);background:var(--purple-glow);opacity:0.2;"></div>
@@ -698,11 +637,7 @@
     </div>
   </div>
 </section>
-
-
 <hr class="div">
-
-
 <!-- ── SECTION 4: SHARING & COLLABORATION ── -->
 <section id="sharing" class="section alt">
   <div class="container">
@@ -738,11 +673,7 @@
     </div>
   </div>
 </section>
-
-
 <hr class="div">
-
-
 <!-- ── SECTION 5: CALENDAR SYNC & LISTS ── -->
 <section id="calendar" class="section">
   <div class="orb" style="width:360px;height:360px;top:30%;right:-60px;background:var(--teal-glow);opacity:0.25;"></div>
@@ -772,11 +703,7 @@
     </div>
   </div>
 </section>
-
-
 <hr class="div">
-
-
 <!-- ── FEATURE GRID ── -->
 <section id="feat-grid">
   <div class="container">
@@ -817,15 +744,13 @@
     </div>
   </div>
 </section>
-
-
 <!-- ── FINAL CTA ── -->
 <section id="final-cta">
   <div class="orb" style="width:600px;height:600px;bottom:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.5;"></div>
   <div class="container" style="position:relative;z-index:1;">
     <span class="lbl fade-up" style="display:block;">Get started today</span>
     <h2 class="fade-up d1">Your most important work,<br><span class="gt">always at the top.</span></h2>
-    <p class="subhead fade-up d2" style="margin:0 auto 44px;">D<span style="color:var(--teal)">ai</span>LY — the world's most advanced task app.</p>
+    <p class="subhead fade-up d2" style="margin:0 auto 44px;">DaiLY — the world's most advanced task app.</p>
     <div class="fade-up d3">
       <a href="#" class="btn-final">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -844,14 +769,12 @@
     </div>
   </div>
 </section>
-
-
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
     <div>
       <div class="footer-logo">
-        <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.02em;">D<span style="color:#3ECFCF;">ai</span>LY</span>
+        <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.02em;">DaiLY</span>
       </div>
       <p class="footer-tagline">The world's most advanced task management app. Built for people who want to get things done.</p>
     </div>
@@ -880,8 +803,6 @@
     <p>Made for people who get things done.</p>
   </div>
 </footer>
-
-
 <script>
   // ── Scroll animations ──
   const observer = new IntersectionObserver(entries => {
@@ -889,13 +810,11 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   document.querySelectorAll('#hero .fade-up').forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 120));
-
   // Nav shadow on scroll
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
     nav.style.borderBottomColor = window.scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.08)';
   });
-
   // Hide placeholder when image loads successfully
   document.querySelectorAll('.phone-screen img').forEach(img => {
     if (img.complete && img.naturalWidth > 0) {
@@ -908,10 +827,8 @@
       });
     }
   });
-
   // ── CAPTCHA ──
   let captchaAnswer = 0;
-
   function generateCaptcha() {
     const ops = [
       () => { const a = Math.floor(Math.random()*9)+1, b = Math.floor(Math.random()*9)+1; return { q: `${a} + ${b} = ?`, ans: a+b }; },
@@ -924,7 +841,6 @@
     document.getElementById('captchaAnswer').value = '';
     document.getElementById('captchaError').classList.remove('show');
   }
-
   function verifyCaptcha() {
     const val = parseInt(document.getElementById('captchaAnswer').value, 10);
     if (isNaN(val) || val !== captchaAnswer) {
@@ -938,21 +854,18 @@
     const formStep = document.getElementById('stepForm');
     formStep.classList.add('active');
   }
-
   // ── FILE UPLOAD ──
   function handleFileChange(input) {
     const file = input.files[0];
     const area = document.getElementById('fileUploadArea');
     const nameEl = document.getElementById('fileName');
     const errEl = document.getElementById('fileError');
-
     if (!file) {
       area.classList.remove('has-file');
       nameEl.style.display = 'none';
       errEl.classList.remove('show');
       return;
     }
-
     const allowed = ['image/png', 'image/jpeg', 'image/jpg'];
     if (!allowed.includes(file.type)) {
       errEl.classList.add('show');
@@ -961,7 +874,6 @@
       input.value = '';
       return;
     }
-
     if (file.size > 10 * 1024 * 1024) {
       errEl.textContent = 'File must be under 10 MB';
       errEl.classList.add('show');
@@ -970,24 +882,20 @@
       input.value = '';
       return;
     }
-
     errEl.classList.remove('show');
     area.classList.add('has-file');
     nameEl.textContent = '✓ ' + file.name;
     nameEl.style.display = 'block';
   }
-
   // ── FORM VALIDATION & SUBMIT ──
   function handleFormSubmit(e) {
     e.preventDefault();
-
     const fields = [
       { id: 'firstName',   errId: 'errFirstName',   check: v => v.trim().length > 0 },
       { id: 'lastName',    errId: 'errLastName',    check: v => v.trim().length > 0 },
       { id: 'appVersion',  errId: 'errAppVersion',  check: v => v !== '' },
       { id: 'description', errId: 'errDescription', check: v => v.trim().length > 10 },
     ];
-
     let valid = true;
     fields.forEach(({ id, errId, check }) => {
       const el = document.getElementById(id);
@@ -1001,18 +909,14 @@
         err.classList.remove('show');
       }
     });
-
     if (!valid) return false;
-
     // Disable send button & show sending state
     const sendBtn = document.getElementById('sendBtn');
     sendBtn.disabled = true;
     sendBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right:6px;animation:spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>Sending…';
-
     // Submit via fetch to FormSubmit
     const form = document.getElementById('supportForm');
     const formData = new FormData(form);
-
     fetch(form.action, {
       method: 'POST',
       body: formData,
@@ -1026,17 +930,14 @@
       // Still show success — first submission to FormSubmit requires email activation
       showSuccess();
     });
-
     return false;
   }
-
   function showSuccess() {
     document.getElementById('stepForm').classList.remove('active');
     document.getElementById('stepForm').style.display = 'none';
     const successStep = document.getElementById('stepSuccess');
     successStep.classList.add('active');
   }
-
   // ── MODAL OPEN / CLOSE ──
   function openSupportModal(e) {
     if (e) e.preventDefault();
@@ -1057,29 +958,23 @@
     const sendBtn = document.getElementById('sendBtn');
     sendBtn.disabled = false;
     sendBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Send Message';
-
     document.getElementById('supportModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     document.getElementById('supportModal').classList.remove('open');
     document.body.style.overflow = '';
   }
-
   // Close on overlay click
   document.getElementById('supportModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
-
   // Close on Escape
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
   // Spinner keyframe
   const spinStyle = document.createElement('style');
   spinStyle.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
   document.head.appendChild(spinStyle);
 </script>
-
 </body>
 </html>
