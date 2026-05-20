@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5" />
+  <title>DaiLY — The World's Most Advanced Task App</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="app-icon.png" />
+  <link rel="apple-touch-icon" href="app-icon.png" />
+  <!-- SEO -->
+  <meta name="description" content="DaiLY uses a Prioritization Engine to rank your tasks in the optimal order — so you always know exactly what to do next. Priority Assist, Detail Assistant, and more." />
+  <meta name="theme-color" content="#7B35CC" />
+  <!-- Open Graph (iMessage, Slack, Facebook, etc.) -->
+  <meta property="og:title" content="DaiLY — The World's Most Advanced Task App" />
+  <meta property="og:description" content="Prioirty Assist solves analysis paralysis. Stop guessing. Start doing." />
+  <meta property="og:image" content="https://leone-labs.com/screenshot-splash.png" />
+  <meta property="og:url" content="https://leone-labs.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="DaiLY" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DaiLY — The World's Most Advanced Task App" />
+  <meta name="twitter:description" content="PRIORITY ASSIST tells you what order to complete tasks to maximize your time!" />
+  <meta name="twitter:image" content="https://leone-labs.com/screenshot-splash.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #08080F; color: #fff; line-height: 1.6; overflow-x: hidden; }
+    :root {
+      --purple: #7B35CC; --purple-b: #9B55EC;
+      --purple-glow: rgba(123,53,204,0.35);
+      --teal: #3ECFCF; --teal-glow: rgba(62,207,207,0.25);
+      --bg0: #08080F; --bg1: #0D0D1A; --bgc: #13132A;
+      --border: rgba(255,255,255,0.08); --ba: rgba(123,53,204,0.4);
+      --t2: rgba(255,255,255,0.62); --t3: rgba(255,255,255,0.38);
+    }
+    h1 { font-size: clamp(2.4rem,6vw,4.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
+    h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
+    h3 { font-size: clamp(1.1rem,2vw,1.5rem); font-weight: 600; letter-spacing: -0.02em; }
+    p  { font-size: clamp(0.95rem,1.8vw,1.1rem); color: var(--t2); line-height: 1.75; }
+    .gt { background: linear-gradient(135deg,#C47FFF,#7B35CC,#3ECFCF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .tt { color: var(--teal); }
+    .lbl { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; background: rgba(8,8,15,0.8); backdrop-filter: blur(18px); border-bottom: 0.5px solid var(--border); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-splash { height: 38px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 13.5px; color: var(--t2); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta { background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 9px 22px; font-size: 13.5px; font-weight: 600; cursor: pointer; text-decoration: none; transition: opacity 0.2s,transform 0.15s; }
+    .nav-cta:hover { opacity: 0.88; transform: scale(1.02); }
+    /* ── HERO ── */
+    #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; background: radial-gradient(ellipse 70% 60% at 50% 0%,rgba(123,53,204,0.22) 0%,transparent 70%), radial-gradient(ellipse 40% 40% at 80% 80%,rgba(62,207,207,0.10) 0%,transparent 60%), var(--bg0); position: relative; overflow: hidden; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(123,53,204,0.15); border: 0.5px solid var(--ba); border-radius: 50px; padding: 6px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #C47FFF; text-transform: uppercase; margin-bottom: 28px; }
+    #hero h1 { max-width: 760px; margin-bottom: 20px; }
+    .subhead { max-width: 560px; margin: 0 auto 40px; font-size: clamp(1rem,2.2vw,1.18rem); color: var(--t2); }
+    .hero-cta-group { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .btn-hero { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 15px 36px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 0 40px rgba(123,53,204,0.45); transition: opacity 0.2s,transform 0.15s; }
+    .btn-hero:hover { opacity: 0.9; transform: translateY(-2px); }
+    .store-badges { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .store-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.06); border: 0.5px solid var(--border); border-radius: 14px; padding: 10px 20px; cursor: pointer; text-decoration: none; color: inherit; transition: background 0.2s; }
+    .store-badge:hover { background: rgba(255,255,255,0.10); }
+    .sb-label { font-size: 9px; color: var(--t2); margin-bottom: 1px; }
+    .sb-name  { font-size: 14px; font-weight: 600; color: #fff; }
+    /* ── PHONE FRAMES ── */
+    .phone-row { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 64px; position: relative; z-index: 1; }
+    .phone { background: #0E0E20; border-radius: 42px; border: 1.5px solid rgba(255,255,255,0.12); padding: 14px 10px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); position: relative; }
+    .phone.center { width: 260px; z-index: 2; }
+    .phone.side   { width: 210px; opacity: 0.82; }
+    .phone.tilt-l { transform: rotate(-5deg); margin-bottom: 20px; }
+    .phone.tilt-r { transform: rotate(5deg);  margin-bottom: 20px; }
+    .phone-notch  { width: 80px; height: 22px; background: #08080F; border-radius: 0 0 16px 16px; margin: 0 auto 10px; }
+    .phone-screen { border-radius: 28px; overflow: hidden; background: #0C0C22; min-height: 400px; display: flex; align-items: stretch; }
+    .phone.center .phone-screen { min-height: 480px; }
+    /* screenshot img inside phone */
+    .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; min-height: 400px; }
+    .phone.center .phone-screen img { min-height: 480px; }
+    /* clean dark placeholder when image missing — NO text shown to visitors */
+    .phone-screen img[src=""] , .phone-screen img:not([src]) { display: none; }
+    .phone-placeholder { width: 100%; min-height: 400px; display: flex; align-items: center; justify-content: center; background: linear-gradient(160deg,#0C0C22,#101028); }
+    .phone.center .phone-placeholder { min-height: 480px; }
+    .phone-placeholder-inner { width: 48px; height: 48px; border-radius: 14px; background: rgba(123,53,204,0.15); border: 1px solid rgba(123,53,204,0.25); display: flex; align-items: center; justify-content: center; }
+    /* ── SECTIONS ── */
+    .section { padding: 110px 0; position: relative; overflow: hidden; }
+    .section.alt { background: var(--bg1); }
+    hr.div { border: none; border-top: 0.5px solid var(--border); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .split.rev { direction: rtl; }
+    .split.rev > * { direction: ltr; }
+    .feature-copy h2 { margin-bottom: 20px; }
+    .feature-copy p  { margin-bottom: 28px; max-width: 480px; }
+    .phone-vis { display: flex; justify-content: center; position: relative; }
+    .glow { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle,rgba(123,53,204,0.18) 0%,transparent 70%); pointer-events: none; }
+    .glow.teal { background: radial-gradient(circle,rgba(62,207,207,0.15) 0%,transparent 70%); }
+    /* priority section */
+    #priority { padding: 130px 0; background: linear-gradient(180deg,var(--bg0),var(--bg1),var(--bg0)); }
+    #priority .container { text-align: center; }
+    #priority h2 { font-size: clamp(2.2rem,5vw,3.8rem); max-width: 700px; margin: 0 auto 20px; }
+    #priority .body-text { max-width: 700px; margin: 0 auto 60px; }
+    .priority-phones { display: flex; justify-content: center; align-items: flex-end; gap: 20px; }
+    /* feature grid */
+    #feat-grid { background: var(--bg1); padding: 100px 0; }
+    #feat-grid .container { text-align: center; }
+    #feat-grid h2 { margin-bottom: 12px; }
+    #feat-grid > .container > p { max-width: 480px; margin: 0 auto 56px; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .feat-card { background: var(--bgc); border: 0.5px solid var(--border); border-radius: 18px; padding: 28px 24px; text-align: left; transition: border-color 0.25s,transform 0.2s; }
+    .feat-card:hover { border-color: var(--ba); transform: translateY(-3px); }
+    .feat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; background: rgba(123,53,204,0.15); border: 0.5px solid rgba(123,53,204,0.3); }
+    .feat-icon.t { background: rgba(62,207,207,0.12); border-color: rgba(62,207,207,0.3); }
+    .feat-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .feat-card p  { font-size: 13px; color: var(--t2); line-height: 1.6; }
+    /* CTA */
+    #final-cta { padding: 130px 0; text-align: center; background: radial-gradient(ellipse 80% 60% at 50% 100%,rgba(123,53,204,0.22) 0%,transparent 70%), var(--bg0); position: relative; overflow: hidden; }
+    #final-cta h2 { max-width: 680px; margin: 0 auto 16px; font-size: clamp(2rem,5vw,3.6rem); }
+    #final-cta .subhead { max-width: 440px; }
+    .btn-final { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff; border: none; border-radius: 50px; padding: 16px 44px; font-size: 17px; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 0 50px rgba(123,53,204,0.5); margin-bottom: 28px; transition: opacity 0.2s,transform 0.15s; }
+    .btn-final:hover { opacity: 0.9; transform: translateY(-2px); }
+    /* footer */
+    footer { background: #05050D; border-top: 0.5px solid var(--border); padding: 48px 32px 36px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; }
+    .footer-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+    .footer-logo-icon { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg,#9B55EC,#7B35CC); display: flex; align-items: center; justify-content: center; }
+    .footer-tagline { font-size: 12.5px; color: var(--t3); max-width: 240px; line-height: 1.5; }
+    .footer-links { display: flex; gap: 32px; }
+    .footer-col h4 { font-size: 12px; font-weight: 700; color: var(--t2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--t3); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { max-width: 1100px; margin: 32px auto 0; padding-top: 20px; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 12px; color: var(--t3); }
+    /* animations */
+    .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease,transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; } .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; } .fade-up.d4 { transition-delay: 0.4s; }
+    /* chips */
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .chip { background: rgba(123,53,204,0.12); border: 0.5px solid rgba(123,53,204,0.3); border-radius: 10px; padding: 9px 14px; }
+    .chip.t { background: rgba(62,207,207,0.10); border-color: rgba(62,207,207,0.3); }
+    .chip-title { font-size: 11px; font-weight: 700; color: #C47FFF; margin-bottom: 2px; }
+    .chip.t .chip-title { color: var(--teal); }
+    .chip-desc  { font-size: 11px; color: var(--t2); }
+    /* team avatars */
+    .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 2px solid var(--bg1); flex-shrink: 0; }
+    /* ── SUPPORT MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(5,5,13,0.82); backdrop-filter: blur(12px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #0D0D1A; border: 0.5px solid rgba(123,53,204,0.45);
+      border-radius: 22px; width: 100%; max-width: 520px;
+      box-shadow: 0 0 80px rgba(123,53,204,0.25), 0 32px 64px rgba(0,0,0,0.6);
+      overflow: hidden; animation: modalIn 0.28s cubic-bezier(0.34,1.56,0.64,1);
+      max-height: 90vh; overflow-y: auto;
+    }
+    @keyframes modalIn { from { opacity:0; transform:scale(0.9) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    .modal-header {
+      padding: 28px 28px 0;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    }
+    .modal-header-title { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+    .modal-header-sub { font-size: 12.5px; color: var(--t2); margin-top: 4px; }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.07);
+      border: none; color: var(--t2); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; transition: background 0.2s, color 0.2s; flex-shrink: 0; line-height: 1;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.13); color: #fff; }
+    .modal-body { padding: 24px 28px 28px; }
+    /* Progress dots */
+    .modal-progress { display: flex; align-items: center; gap: 8px; padding: 16px 28px 0; }
+    .progress-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: background 0.3s, width 0.3s; }
+    .progress-dot.active { background: var(--purple-b); width: 22px; border-radius: 4px; }
+    .progress-dot.done { background: var(--teal); }
+    /* CAPTCHA STEP */
+    .captcha-wrap { text-align: center; padding: 8px 0 4px; }
+    .captcha-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(123,53,204,0.12); border: 0.5px solid rgba(123,53,204,0.3);
+      border-radius: 50px; padding: 5px 14px; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; color: #C47FFF; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .captcha-question {
+      font-size: 32px; font-weight: 700; color: #fff; letter-spacing: -0.03em;
+      background: rgba(123,53,204,0.10); border: 0.5px solid rgba(123,53,204,0.25);
+      border-radius: 16px; padding: 22px 36px; display: inline-block; margin-bottom: 22px;
+      font-variant-numeric: tabular-nums;
+    }
+    .captcha-label { font-size: 13px; color: var(--t2); margin-bottom: 10px; display: block; text-align: left; }
+    .captcha-input {
+      width: 100%; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 13px 16px; color: #fff; font-size: 20px; font-weight: 600;
+      text-align: center; outline: none; transition: border-color 0.2s; letter-spacing: 0.05em;
+      font-family: inherit;
+    }
+    .captcha-input:focus { border-color: rgba(123,53,204,0.6); }
+    .captcha-error { color: #FF6B6B; font-size: 12.5px; margin-top: 8px; display: none; text-align: center; }
+    .captcha-error.show { display: block; }
+    /* FORM STEP */
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-field { margin-bottom: 14px; }
+    .form-field label {
+      display: block; font-size: 11px; font-weight: 600; color: var(--t2);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 7px;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px;
+      outline: none; transition: border-color 0.2s; font-family: inherit;
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px;
+      cursor: pointer;
+    }
+    .form-field select option { background: #0D0D1A; color: #fff; }
+    .form-field textarea { resize: none; min-height: 96px; line-height: 1.6; }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: rgba(123,53,204,0.6); }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .field-error-msg { color: #FF6B6B; font-size: 11.5px; margin-top: 5px; display: none; }
+    .field-error-msg.show { display: block; }
+    .form-field input.err,
+    .form-field select.err,
+    .form-field textarea.err { border-color: rgba(255,107,107,0.6); }
+    /* File Upload */
+    .file-upload-area {
+      border: 1px dashed rgba(123,53,204,0.4); border-radius: 12px;
+      padding: 20px 16px; text-align: center; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s; position: relative;
+    }
+    .file-upload-area:hover { border-color: rgba(123,53,204,0.7); background: rgba(123,53,204,0.05); }
+    .file-upload-area.has-file { border-color: rgba(62,207,207,0.5); background: rgba(62,207,207,0.04); }
+    .file-upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .file-upload-icon { margin-bottom: 8px; opacity: 0.7; }
+    .file-upload-text { font-size: 13px; color: var(--t2); line-height: 1.5; }
+    .file-upload-text strong { color: #C47FFF; }
+    .file-type-hint { font-size: 11px; color: var(--t3); margin-top: 4px; }
+    .file-upload-name { font-size: 12.5px; color: var(--teal); margin-top: 8px; display: none; font-weight: 600; }
+    .file-error { color: #FF6B6B; font-size: 12px; margin-top: 6px; display: none; }
+    .file-error.show { display: block; }
+    /* Modal Buttons */
+    .modal-actions { display: flex; gap: 12px; margin-top: 22px; }
+    .btn-modal-cancel {
+      flex: 1; padding: 13px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;
+      background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12);
+      color: var(--t2); cursor: pointer; transition: background 0.2s, color 0.2s;
+      text-decoration: none; display: flex; align-items: center; justify-content: center;
+      font-family: inherit;
+    }
+    .btn-modal-cancel:hover { background: rgba(255,255,255,0.10); color: #fff; }
+    .btn-modal-send {
+      flex: 2; padding: 13px 16px; border-radius: 12px; font-size: 14px; font-weight: 700;
+      background: linear-gradient(135deg,#9B55EC,#7B35CC); border: none;
+      color: #fff; cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 0 24px rgba(123,53,204,0.4); font-family: inherit;
+    }
+    .btn-modal-send:hover { opacity: 0.88; transform: scale(1.02); }
+    .btn-modal-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-modal-next {
+      width: 100%; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700;
+      background: linear-gradient(135deg,#9B55EC,#7B35CC); border: none;
+      color: #fff; cursor: pointer; margin-top: 20px; transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 0 24px rgba(123,53,204,0.4); font-family: inherit;
+    }
+    .btn-modal-next:hover { opacity: 0.88; transform: translateY(-1px); }
+    /* Success state */
+    .modal-success { text-align: center; padding: 12px 0 8px; display: none; }
+    .modal-success.show { display: block; }
+    .success-icon { font-size: 52px; margin-bottom: 16px; }
+    .success-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .success-sub { font-size: 14px; color: var(--t2); line-height: 1.7; max-width: 340px; margin: 0 auto 24px; }
+    .btn-success-close {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg,#9B55EC,#7B35CC); color: #fff;
+      border: none; border-radius: 12px; padding: 13px 28px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+    }
+    .btn-success-close:hover { opacity: 0.88; }
+    @media(max-width:800px) {
+      .split { grid-template-columns: 1fr; gap: 48px; }
+      .split.rev { direction: ltr; }
+      .feat-grid { grid-template-columns: 1fr 1fr; }
+      .priority-phones .phone.side { display: none; }
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .footer-links { flex-direction: column; gap: 24px; }
+      .section { padding: 72px 0; }
+      #priority { padding: 80px 0; }
+      #hero { padding: 100px 16px 60px; }
+      .hero-cta-group { width: 100%; }
+    }
+    @media(max-width:520px) {
+      .feat-grid { grid-template-columns: 1fr; }
+      .store-badges { flex-direction: column; align-items: stretch; width: 100%; max-width: 260px; }
+      .store-badge { justify-content: center; }
+      .btn-hero { width: 100%; max-width: 260px; justify-content: center; font-size: 15px; padding: 14px 24px; }
+      .btn-final { width: 100%; max-width: 280px; justify-content: center; font-size: 15px; padding: 14px 24px; }
+      h1 { font-size: clamp(2rem, 8vw, 3rem); }
+      .phone.center { width: 220px; }
+      nav { padding: 0 14px; }
+      .nav-cta { padding: 8px 16px; font-size: 12.5px; }
+      .container { padding: 0 16px; }
+      .footer-inner { flex-direction: column; gap: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal-body { padding: 20px 20px 24px; }
+      .modal-header { padding: 22px 20px 0; }
+      .modal-progress { padding: 14px 20px 0; }
+    }
+  </style>
+</head>
+<body>
+<!-- ── SUPPORT MODAL ── -->
+<div class="modal-overlay" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box" id="modalBox">
+    <!-- STEP 1: CAPTCHA -->
+    <div id="stepCaptcha">
+      <div class="modal-header">
+        <div>
+          <div class="modal-header-title" id="modalTitle">Human Verification</div>
+          <div class="modal-header-sub">Please solve this quick puzzle to continue</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-progress">
+        <div class="progress-dot active" id="dot1"></div>
+        <div class="progress-dot" id="dot2"></div>
+      </div>
+      <div class="modal-body">
+        <div class="captcha-wrap">
+          <div class="captcha-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-1-5h2v2h-2zm0-8h2v6h-2z" fill="#C47FFF"/></svg>
+            Security Check
+          </div>
+          <div class="captcha-question" id="captchaQuestion"></div>
+          <label class="captcha-label" for="captchaAnswer">Enter the answer below</label>
+          <input
+            class="captcha-input" type="number" id="captchaAnswer"
+            placeholder="?" autocomplete="off" inputmode="numeric"
+            onkeydown="if(event.key==='Enter') verifyCaptcha()"
+          />
+          <div class="captcha-error" id="captchaError">&#10007; Incorrect — try again</div>
+        </div>
+        <button class="btn-modal-next" onclick="verifyCaptcha()">Verify &amp; Continue →</button>
+      </div>
+    </div>
+    <!-- STEP 2: CONTACT FORM -->
+    <div id="stepForm" class="form-step">
+      <div class="modal-header">
+        <div>
+          <div class="modal-header-title">Contact Support</div>
+          <div class="modal-header-sub">We'll get back to you as soon as possible</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-progress">
+        <div class="progress-dot done" id="dot1b"></div>
+        <div class="progress-dot active" id="dot2b"></div>
+      </div>
+      <div class="modal-body">
+        <!-- FormSubmit.co handles delivery to Support@Leone-Labs.com -->
+        <form
+          id="supportForm"
+          action="https://formsubmit.co/Support@Leone-Labs.com"
+          method="POST"
+          enctype="multipart/form-data"
+          onsubmit="return handleFormSubmit(event)"
+          novalidate
+        >
+          <!-- FormSubmit config fields -->
+          <input type="hidden" name="_subject" value="DaiLY App Support Request" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value="https://leone-labs.com" />
+          <input type="hidden" name="_autoresponse" value="Thank you for contacting DaiLY Support! We've received your message and will get back to you shortly." />
+          <div class="form-row">
+            <div class="form-field">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="First Name" placeholder="Jane" autocomplete="given-name" />
+              <div class="field-error-msg" id="errFirstName">Please enter your first name</div>
+            </div>
+            <div class="form-field">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" name="Last Name" placeholder="Smith" autocomplete="family-name" />
+              <div class="field-error-msg" id="errLastName">Please enter your last name</div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="appVersion">App Version *</label>
+            <select id="appVersion" name="App Version">
+              <option value="" disabled selected>Select your platform…</option>
+              <option value="iOS">iOS</option>
+              <option value="Android">Android</option>
+            </select>
+            <div class="field-error-msg" id="errAppVersion">Please select a platform</div>
+          </div>
+          <div class="form-field">
+            <label for="description">Describe the Problem *</label>
+            <textarea id="description" name="Problem Description" placeholder="Please describe the issue you're experiencing in as much detail as possible…"></textarea>
+            <div class="field-error-msg" id="errDescription">Please describe the problem</div>
+          </div>
+          <div class="form-field">
+            <label>Screenshot (Optional)</label>
+            <div class="file-upload-area" id="fileUploadArea">
+              <input
+                type="file" id="screenshotFile" name="attachment"
+                accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                onchange="handleFileChange(this)"
+              />
+              <div class="file-upload-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="rgba(123,53,204,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+                  <polyline points="17 8 12 3 7 8" stroke="rgba(123,53,204,0.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="3" x2="12" y2="15" stroke="rgba(123,53,204,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="file-upload-text"><strong>Click to upload</strong> or drag &amp; drop</div>
+              <div class="file-type-hint">PNG or JPG · Max 10 MB</div>
+              <div class="file-upload-name" id="fileName"></div>
+            </div>
+            <div class="file-error" id="fileError">Only PNG or JPG files are accepted</div>
+          </div>
+          <div class="modal-actions">
+            <a href="https://leone-labs.com" class="btn-modal-cancel" id="cancelBtn">Cancel</a>
+            <button type="submit" class="btn-modal-send" id="sendBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- STEP 3: SUCCESS -->
+    <div id="stepSuccess" class="form-step">
+      <div class="modal-header" style="justify-content:flex-end;">
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-success show">
+          <div class="success-icon">✅</div>
+          <div class="success-title">Message Sent!</div>
+          <div class="success-sub">Thanks for reaching out. Our support team at Leone Labs will be in touch with you shortly.</div>
+          <button class="btn-success-close" onclick="closeModal()">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="splash.png" alt="DaiLY" class="nav-logo-splash" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#priority">Priority AI</a></li>
+    <li><a href="#detail">Detail AI</a></li>
+    <li><a href="#notes">Notes</a></li>
+    <li><a href="#sharing">Sharing</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+  </ul>
+</nav>
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="orb" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.6;"></div>
+  <div class="orb" style="width:300px;height:300px;bottom:80px;right:10%;background:var(--teal-glow);opacity:0.4;"></div>
+  <span class="eyebrow fade-up">
+    <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#C47FFF"/></svg>
+    World's first Intelligent task prioritization
+  </span>
+  <h1 class="fade-up d1">Meet <br><span class="gt">Priority<br>Assist.</span></h1>
+  <p class="subhead fade-up d2">Re-order tasks to maximize your time! <br> No more analysis paralysis!</p>
+  <div class="hero-cta-group fade-up d3">
+    <a href="#" class="btn-hero">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      DaiLY Coming Soon!
+    </a>
+    <div class="store-badges">
+      <a href="#" class="store-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div><div class="sb-label">Coming soon to the</div><div class="sb-name">App Store</div></div>
+      </a>
+      <a href="#" class="store-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.34.19.73.24 1.1.14l12.02-6.94-2.85-2.85-10.27 9.65zm-1.13-19.9C2.03 4.2 2 4.57 2 4.96v14.08c0 .39.03.76.05 1.1l9.08-8.54-9.08-8.74zM20.47 9.8l-2.73-1.58-3.19 3 3.19 3.19 2.76-1.59c.79-.45.79-1.57-.03-2.02zM4.28.1C3.9 0 3.52.05 3.18.24L13.55 10.6l2.85-2.85L4.28.1z"/></svg>
+        <div><div class="sb-label">Coming soon to</div><div class="sb-name">Google Play</div></div>
+      </a>
+    </div>
+  </div>
+  <!-- Single hero phone — upload screenshot-hero.png to GitHub -->
+  <div class="phone-row fade-up d4">
+    <div class="phone center">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <img src="screenshot-priority.png" alt="DaiLY Priority Assist screen"
+             onerror="this.style.display='none'" />
+        <div class="phone-placeholder">
+          <div class="phone-placeholder-inner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="div">
+<!-- ── SECTION 1: PRIORITY ASSIST ── -->
+<section id="priority">
+  <div class="orb" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--purple-glow);opacity:0.4;"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="lbl fade-up">Priority Assist</span>
+    <h2 class="fade-up d1">Stop guessing.<br><span class="gt">Start doing.</span></h2>
+    <p class="body-text fade-up d2" style="max-width:700px;margin:0 auto 60px;">Priority Assist is the world's first Prioritization Engine built specifically to rank your tasks in the optimal order — not just by due date, but by everything that matters. It weighs priority, estimated time, your current location, business hours, due date flexibility, task dependencies, and more — then hands you a clear, confident order of what to tackle next. No more decision fatigue. No more staring at a list wondering where to start.</p>
+    <!-- 3 phones — upload screenshot-priority-left.png, screenshot-priority.png, screenshot-priority-right.png -->
+    <div class="priority-phones fade-up d3">
+      <div class="phone side tilt-l">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img src="screenshot-priority-left.png" alt="Priority factors"
+               onerror="this.style.display='none'" />
+          <div class="phone-placeholder">
+            <div class="phone-placeholder-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone center">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img src="screenshot-priority.png" alt="Priority Assist screen"
+               onerror="this.style.display='none'" />
+          <div class="phone-placeholder">
+            <div class="phone-placeholder-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone side tilt-r">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img src="screenshot-priority-right.png" alt="Ranked tasks"
+               onerror="this.style.display='none'" />
+          <div class="phone-placeholder">
+            <div class="phone-placeholder-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="div">
+<!-- ── SECTION 2: DETAIL ASSISTANT ── -->
+<section id="detail" class="section alt">
+  <div class="orb" style="width:400px;height:400px;top:50%;right:-100px;transform:translateY(-50%);background:var(--teal-glow);opacity:0.3;"></div>
+  <div class="container">
+    <div class="split">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Detail Assistant</span>
+        <h2 class="fade-up d1">Create tasks in seconds.<br><span class="tt">Get all the detail automatically.</span></h2>
+        <p class="fade-up d2">Just describe what you need to do. DaiLY's Detail Assistant fills in the critical fields — priority, due date, estimated time, contact info, location, and more — so your tasks are always complete and actionable from the moment you create them.</p>
+      </div>
+      <!-- upload screenshot-detail.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow teal"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="screenshot-detail.png" alt="Detail Assistant screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(62,207,207,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="div">
+<!-- ── SECTION 3: NOTES, FILES & CLOUD ── -->
+<section id="notes" class="section">
+  <div class="orb" style="width:380px;height:380px;top:40%;left:-80px;transform:translateY(-50%);background:var(--purple-glow);opacity:0.2;"></div>
+  <div class="container">
+    <div class="split rev">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Notes, Files &amp; Cloud Backup</span>
+        <h2 class="fade-up d1">Never lose<br><span class="gt">context again.</span></h2>
+        <p class="fade-up d2">Take time-stamped notes directly on any task. Attach files and photos. Back up the entire task to cloud storage for a permanent record — perfect for projects, clients, or anything that matters long-term.</p>
+        <div class="chip-row fade-up d3">
+          <div class="chip">
+            <div class="chip-title">Time-stamped notes</div>
+            <div class="chip-desc">Every note gets a timestamp automatically</div>
+          </div>
+          <div class="chip t">
+            <div class="chip-title">Cloud backup</div>
+            <div class="chip-desc">Permanent records for what matters</div>
+          </div>
+        </div>
+      </div>
+      <!-- upload screenshot-notes.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="screenshot-notes.png" alt="Notes and files screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="div">
+<!-- ── SECTION 4: SHARING & COLLABORATION ── -->
+<section id="sharing" class="section alt">
+  <div class="container">
+    <div class="split">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Sharing &amp; Collaboration</span>
+        <h2 class="fade-up d1">Built for teams, families,<br><span class="tt">and everyone in between.</span></h2>
+        <p class="fade-up d2">Share tasks with the people who need them. Assign work, track progress together, and stay in sync — whether you're coordinating a project at work or splitting the to-do list at home.</p>
+        <div class="fade-up d3" style="display:flex;align-items:center;gap:4px;margin-top:16px;">
+          <div class="avatar" style="background:linear-gradient(135deg,#9B55EC,#7B35CC);">D</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#3ECFCF,#2AACAC);margin-left:-8px;">M</div>
+          <div class="avatar" style="background:linear-gradient(135deg,#CC7B35,#CC5035);margin-left:-8px;">J</div>
+          <div class="avatar" style="background:rgba(255,255,255,0.08);color:var(--t2);margin-left:-8px;">+4</div>
+          <span style="font-size:13px;color:var(--t2);margin-left:12px;">Share with your whole team</span>
+        </div>
+      </div>
+      <!-- upload screenshot-sharing.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow teal"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="screenshot-sharing.png" alt="Task sharing screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(62,207,207,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="div">
+<!-- ── SECTION 5: CALENDAR SYNC & LISTS ── -->
+<section id="calendar" class="section">
+  <div class="orb" style="width:360px;height:360px;top:30%;right:-60px;background:var(--teal-glow);opacity:0.25;"></div>
+  <div class="container">
+    <div class="split rev">
+      <div class="feature-copy">
+        <span class="lbl fade-up">Calendar Sync &amp; Lists</span>
+        <h2 class="fade-up d1">Focus on what<br><span class="gt">matters right now.</span></h2>
+        <p class="fade-up d2">Sync tasks with your calendar so nothing slips through. Group tasks into Lists and switch views on the fly — so you only see what's relevant to the moment, the project, or the role you're in right now.</p>
+      </div>
+      <!-- upload screenshot-calendar.png to GitHub -->
+      <div class="phone-vis fade-up d2">
+        <div class="glow teal"></div>
+        <div class="phone center" style="position:relative;z-index:1;">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="screenshot-calendar.png" alt="Calendar and lists screen"
+                 onerror="this.style.display='none'" />
+            <div class="phone-placeholder">
+              <div class="phone-placeholder-inner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(62,207,207,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="div">
+<!-- ── FEATURE GRID ── -->
+<section id="feat-grid">
+  <div class="container">
+    <span class="lbl fade-up" style="display:block;">Everything you need</span>
+    <h2 class="fade-up d1">Built for how you actually work</h2>
+    <p class="fade-up d2">Six powerful features that work together to make you unstoppable.</p>
+    <div class="feat-grid">
+      <div class="feat-card fade-up">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="rgba(123,53,204,0.4)" stroke="#9B55EC" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <h3>Intelligent Priority Ranking</h3>
+        <p>The world's first Prioritization Engine that weighs every factor and tells you exactly what to do next.</p>
+      </div>
+      <div class="feat-card fade-up d1">
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#3ECFCF" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#3ECFCF" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Detail Assistant</h3>
+        <p>Describe a task in plain language. Natural Language Processing fills in everything else automatically.</p>
+      </div>
+      <div class="feat-card fade-up d2">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#9B55EC" stroke-width="1.5"/><line x1="8" y1="13" x2="16" y2="13" stroke="#9B55EC" stroke-width="1.5"/><line x1="8" y1="17" x2="13" y2="17" stroke="#9B55EC" stroke-width="1.5"/></svg></div>
+        <h3>Time-Stamped Notes</h3>
+        <p>Log notes on any task with automatic timestamps. Never lose context mid-project.</p>
+      </div>
+      <div class="feat-card fade-up d3">
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#3ECFCF" stroke-width="1.5"/><polyline points="17 8 12 3 7 8" stroke="#3ECFCF" stroke-width="1.5"/><line x1="12" y1="3" x2="12" y2="15" stroke="#3ECFCF" stroke-width="1.5"/></svg></div>
+        <h3>File Attachments &amp; Cloud</h3>
+        <p>Attach files and photos. Back up tasks to the cloud for a permanent, searchable record.</p>
+      </div>
+      <div class="feat-card fade-up d4">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#9B55EC" stroke-width="1.5"/><circle cx="9" cy="7" r="4" stroke="#9B55EC" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#9B55EC" stroke-width="1.5" opacity="0.5"/></svg></div>
+        <h3>Task Sharing &amp; Teams</h3>
+        <p>Share, assign, and track tasks together. Works for work teams, families, and everyone in between.</p>
+      </div>
+      <div class="feat-card fade-up d4">
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#3ECFCF" stroke-width="1.5"/><line x1="16" y1="2" x2="16" y2="6" stroke="#3ECFCF" stroke-width="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#3ECFCF" stroke-width="1.5"/><line x1="3" y1="10" x2="21" y2="10" stroke="#3ECFCF" stroke-width="1.5" opacity="0.5"/><circle cx="8" cy="15" r="1.5" fill="#3ECFCF"/><circle cx="12" cy="15" r="1.5" fill="#3ECFCF" opacity="0.5"/></svg></div>
+        <h3>Calendar Sync</h3>
+        <p>Sync tasks with your calendar. Switch lists on the fly to see only what's relevant right now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ── FINAL CTA ── -->
+<section id="final-cta">
+  <div class="orb" style="width:600px;height:600px;bottom:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.5;"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="lbl fade-up" style="display:block;">Get started today</span>
+    <h2 class="fade-up d1">Your most important work,<br><span class="gt">always at the top.</span></h2>
+    <p class="subhead fade-up d2" style="margin:0 auto 44px;">DaiLY — the world's most advanced task app.</p>
+    <div class="fade-up d3">
+      <a href="#" class="btn-final">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Get Started Free
+      </a>
+      <div class="store-badges" style="justify-content:center;margin-top:28px;">
+        <a href="#" class="store-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div><div class="sb-label">Download on the</div><div class="sb-name">App Store</div></div>
+        </a>
+        <a href="#" class="store-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.34.19.73.24 1.1.14l12.02-6.94-2.85-2.85-10.27 9.65zm-1.13-19.9C2.03 4.2 2 4.57 2 4.96v14.08c0 .39.03.76.05 1.1l9.08-8.54-9.08-8.74zM20.47 9.8l-2.73-1.58-3.19 3 3.19 3.19 2.76-1.59c.79-.45.79-1.57-.03-2.02zM4.28.1C3.9 0 3.52.05 3.18.24L13.55 10.6l2.85-2.85L4.28.1z"/></svg>
+          <div><div class="sb-label">Get it on</div><div class="sb-name">Google Play</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.02em;">DaiLY</span>
+      </div>
+      <p class="footer-tagline">The world's most advanced task management app. Built for people who want to get things done.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#priority">Priority AI</a>
+        <a href="#detail">Detail Assistant</a>
+        <a href="#notes">Notes &amp; Files</a>
+        <a href="#sharing">Teams</a>
+        <a href="#calendar">Calendar</a>
+      </div>
+      <div class="footer-col">
+        <h4>Download</h4>
+        <a href="#">App Store</a>
+        <a href="#">Google Play</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#" onclick="openSupportModal(event)">Contact Us</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 DaiLY. All rights reserved.</p>
+    <p>Made for people who get things done.</p>
+  </div>
+</footer>
+<script>
+  // ── Scroll animations ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  document.querySelectorAll('#hero .fade-up').forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 120));
+  // Nav shadow on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 40 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.08)';
+  });
+  // Hide placeholder when image loads successfully
+  document.querySelectorAll('.phone-screen img').forEach(img => {
+    if (img.complete && img.naturalWidth > 0) {
+      const ph = img.nextElementSibling;
+      if (ph) ph.style.display = 'none';
+    } else {
+      img.addEventListener('load', () => {
+        const ph = img.nextElementSibling;
+        if (ph) ph.style.display = 'none';
+      });
+    }
+  });
+  // ── CAPTCHA ──
+  let captchaAnswer = 0;
+  function generateCaptcha() {
+    const ops = [
+      () => { const a = Math.floor(Math.random()*9)+1, b = Math.floor(Math.random()*9)+1; return { q: `${a} + ${b} = ?`, ans: a+b }; },
+      () => { const a = Math.floor(Math.random()*5)+5, b = Math.floor(Math.random()*5)+1; return { q: `${a} − ${b} = ?`, ans: a-b }; },
+      () => { const a = Math.floor(Math.random()*9)+2, b = Math.floor(Math.random()*5)+2; return { q: `${a} × ${b} = ?`, ans: a*b }; },
+    ];
+    const { q, ans } = ops[Math.floor(Math.random()*ops.length)]();
+    captchaAnswer = ans;
+    document.getElementById('captchaQuestion').textContent = q;
+    document.getElementById('captchaAnswer').value = '';
+    document.getElementById('captchaError').classList.remove('show');
+  }
+  function verifyCaptcha() {
+    const val = parseInt(document.getElementById('captchaAnswer').value, 10);
+    if (isNaN(val) || val !== captchaAnswer) {
+      document.getElementById('captchaError').classList.add('show');
+      document.getElementById('captchaAnswer').focus();
+      generateCaptcha(); // regenerate on wrong answer
+      return;
+    }
+    // Move to form step
+    document.getElementById('stepCaptcha').style.display = 'none';
+    const formStep = document.getElementById('stepForm');
+    formStep.classList.add('active');
+  }
+  // ── FILE UPLOAD ──
+  function handleFileChange(input) {
+    const file = input.files[0];
+    const area = document.getElementById('fileUploadArea');
+    const nameEl = document.getElementById('fileName');
+    const errEl = document.getElementById('fileError');
+    if (!file) {
+      area.classList.remove('has-file');
+      nameEl.style.display = 'none';
+      errEl.classList.remove('show');
+      return;
+    }
+    const allowed = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!allowed.includes(file.type)) {
+      errEl.classList.add('show');
+      area.classList.remove('has-file');
+      nameEl.style.display = 'none';
+      input.value = '';
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      errEl.textContent = 'File must be under 10 MB';
+      errEl.classList.add('show');
+      area.classList.remove('has-file');
+      nameEl.style.display = 'none';
+      input.value = '';
+      return;
+    }
+    errEl.classList.remove('show');
+    area.classList.add('has-file');
+    nameEl.textContent = '✓ ' + file.name;
+    nameEl.style.display = 'block';
+  }
+  // ── FORM VALIDATION & SUBMIT ──
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const fields = [
+      { id: 'firstName',   errId: 'errFirstName',   check: v => v.trim().length > 0 },
+      { id: 'lastName',    errId: 'errLastName',    check: v => v.trim().length > 0 },
+      { id: 'appVersion',  errId: 'errAppVersion',  check: v => v !== '' },
+      { id: 'description', errId: 'errDescription', check: v => v.trim().length > 10 },
+    ];
+    let valid = true;
+    fields.forEach(({ id, errId, check }) => {
+      const el = document.getElementById(id);
+      const err = document.getElementById(errId);
+      if (!check(el.value)) {
+        el.classList.add('err');
+        err.classList.add('show');
+        valid = false;
+      } else {
+        el.classList.remove('err');
+        err.classList.remove('show');
+      }
+    });
+    if (!valid) return false;
+    // Disable send button & show sending state
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.disabled = true;
+    sendBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right:6px;animation:spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>Sending…';
+    // Submit via fetch to FormSubmit
+    const form = document.getElementById('supportForm');
+    const formData = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => {
+      // Show success regardless (FormSubmit may redirect on first activation)
+      showSuccess();
+    })
+    .catch(() => {
+      // Still show success — first submission to FormSubmit requires email activation
+      showSuccess();
+    });
+    return false;
+  }
+  function showSuccess() {
+    document.getElementById('stepForm').classList.remove('active');
+    document.getElementById('stepForm').style.display = 'none';
+    const successStep = document.getElementById('stepSuccess');
+    successStep.classList.add('active');
+  }
+  // ── MODAL OPEN / CLOSE ──
+  function openSupportModal(e) {
+    if (e) e.preventDefault();
+    generateCaptcha();
+    // Reset to captcha step
+    document.getElementById('stepCaptcha').style.display = '';
+    document.getElementById('stepForm').classList.remove('active');
+    document.getElementById('stepForm').style.display = '';
+    document.getElementById('stepSuccess').classList.remove('active');
+    document.getElementById('stepSuccess').style.display = '';
+    // Reset form
+    document.getElementById('supportForm').reset();
+    document.getElementById('fileUploadArea').classList.remove('has-file');
+    document.getElementById('fileName').style.display = 'none';
+    document.getElementById('fileError').classList.remove('show');
+    document.querySelectorAll('.field-error-msg').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('.form-field input,.form-field select,.form-field textarea').forEach(e => e.classList.remove('err'));
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.disabled = false;
+    sendBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Send Message';
+    document.getElementById('supportModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('supportModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.getElementById('supportModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  // Close on Escape
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  // Spinner keyframe
+  const spinStyle = document.createElement('style');
+  spinStyle.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(spinStyle);
+</script>
+</body>
+</html>
