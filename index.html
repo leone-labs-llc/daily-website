@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5" />
-  <title>DaiLY — The World's Most Advanced Task App</title>
+  <title>DaiLY: The World's Most Advanced Task App</title>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="app-icon.png" />
   <link rel="apple-touch-icon" href="app-icon.png" />
   <!-- SEO -->
-  <meta name="description" content="DaiLY uses a Prioritization Engine to rank your tasks in the optimal order — so you always know exactly what to do next. Priority Assist, Voice Task, and more." />
+  <meta name="description" content="DaiLY uses a Prioritization Engine to rank your tasks in the optimal order, so you always know exactly what to do next. Priority Assist, location reminders, and more." />
   <meta name="theme-color" content="#7B35CC" />
   <!-- Open Graph (iMessage, Slack, Facebook, etc.) -->
-  <meta property="og:title" content="DaiLY — The World's Most Advanced Task App" />
+  <meta property="og:title" content="DaiLY: The World's Most Advanced Task App" />
   <meta property="og:description" content="Prioirty Assist solves analysis paralysis. Stop guessing. Start doing." />
   <meta property="og:image" content="https://leone-labs.com/screenshot-splash.png" />
   <meta property="og:url" content="https://leone-labs.com" />
@@ -19,7 +19,7 @@
   <meta property="og:site_name" content="DaiLY" />
   <!-- Twitter / X Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="DaiLY — The World's Most Advanced Task App" />
+  <meta name="twitter:title" content="DaiLY: The World's Most Advanced Task App" />
   <meta name="twitter:description" content="PRIORITY ASSIST tells you what order to complete tasks to maximize your time!" />
   <meta name="twitter:image" content="https://leone-labs.com/screenshot-splash.png" />
   <style>
@@ -296,7 +296,7 @@
       .split { grid-template-columns: 1fr; gap: 48px; }
       .split.rev { direction: ltr; }
       .feat-grid { grid-template-columns: 1fr 1fr; }
-      .priority-phones .phone.side { display: none; }
+      .priority-phones .phone.side, .phone-row .phone.side { display: none; }
       nav { padding: 0 16px; }
       .nav-links { display: none; }
       .footer-links { flex-direction: column; gap: 24px; }
@@ -354,7 +354,7 @@
             placeholder="?" autocomplete="off" inputmode="numeric"
             onkeydown="if(event.key==='Enter') verifyCaptcha()"
           />
-          <div class="captcha-error" id="captchaError">&#10007; Incorrect — try again</div>
+          <div class="captcha-error" id="captchaError">&#10007; Incorrect, try again</div>
         </div>
         <button class="btn-modal-next" onclick="verifyCaptcha()">Verify &amp; Continue →</button>
       </div>
@@ -468,7 +468,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="#priority">Priority Assistant</a></li>
-    <li><a href="#detail">Voice Task Creator</a></li>
+    <li><a href="#reminders">Reminders</a></li>
     <li><a href="#notes">Notes</a></li>
     <li><a href="#sharing">Sharing</a></li>
     <li><a href="#calendar">Calendar</a></li>
@@ -478,15 +478,15 @@
 <section id="hero">
   <div class="orb" style="width:600px;height:600px;top:-200px;left:50%;transform:translateX(-50%);background:var(--purple-glow);opacity:0.6;"></div>
   <div class="orb" style="width:300px;height:300px;bottom:80px;right:10%;background:var(--teal-glow);opacity:0.4;"></div>
+  <img src="splash.png" alt="DaiLY" class="fade-up" style="width:auto;height:104px;max-width:88%;margin-bottom:26px;filter:drop-shadow(0 16px 40px rgba(123,53,204,0.45));" />
   <span class="eyebrow fade-up">
     <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#C47FFF"/></svg>
-    World's first Intelligent task prioritization
+    World's Most Intelligent Task Prioritization Engine...In Our Opinion
   </span>
   <h1 class="fade-up d1">Meet <br><span class="gt">Priority<br>Assist.</span></h1>
   <p class="subhead fade-up d2">Re-order tasks to maximize your time! <br> No more analysis paralysis!</p>
   <div class="hero-cta-group fade-up d3">
     <a href="#" class="btn-hero">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
       DaiLY Coming Soon!
     </a>
     <div class="store-badges">
@@ -500,12 +500,36 @@
       </a>
     </div>
   </div>
-  <!-- Single hero phone — upload screenshot-hero.png to GitHub -->
+  <!-- 3 phones -->
   <div class="phone-row fade-up d4">
+    <div class="phone side tilt-l">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <img src="screenshot-priority-left.png" alt="Priority factors"
+             onerror="this.style.display='none'" />
+        <div class="phone-placeholder">
+          <div class="phone-placeholder-inner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="phone center">
       <div class="phone-notch"></div>
       <div class="phone-screen">
         <img src="screenshot-priority.png" alt="DaiLY Priority Assist screen"
+             onerror="this.style.display='none'" />
+        <div class="phone-placeholder">
+          <div class="phone-placeholder-inner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone side tilt-r">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <img src="screenshot-priority-right.png" alt="Ranked tasks"
              onerror="this.style.display='none'" />
         <div class="phone-placeholder">
           <div class="phone-placeholder-inner">
@@ -524,36 +548,13 @@
     <span class="lbl fade-up">Priority Assist</span>
     <h2 class="fade-up d1">Stop guessing.<br><span class="gt">Start doing.</span></h2>
     <p class="body-text fade-up d2" style="max-width:700px;margin:0 auto 60px;">Priority Assist is the world's first Prioritization Engine built specifically to rank your tasks in the optimal order, not just by due date, but by everything that matters. It weighs priority, estimated time, your current location, business hours, due date flexibility, task dependencies, and more. Then it hands you a clear, confident order of what to tackle next. No more decision fatigue. No more staring at a list wondering where to start.</p>
-    <!-- 3 phones — upload screenshot-priority-left.png, screenshot-priority.png, screenshot-priority-right.png -->
-    <div class="priority-phones fade-up d3">
-      <div class="phone side tilt-l">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <img src="screenshot-priority-left.png" alt="Priority factors"
-               onerror="this.style.display='none'" />
-          <div class="phone-placeholder">
-            <div class="phone-placeholder-inner">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="phone center">
+    <!-- single priority phone -->
+    <div class="phone-vis fade-up d3" style="margin-top:12px;">
+      <div class="glow"></div>
+      <div class="phone center" style="position:relative;z-index:1;">
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <img src="screenshot-priority.png" alt="Priority Assist screen"
-               onerror="this.style.display='none'" />
-          <div class="phone-placeholder">
-            <div class="phone-placeholder-inner">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 13l3 3 5-5" stroke="rgba(156,100,240,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="phone side tilt-r">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <img src="screenshot-priority-right.png" alt="Ranked tasks"
                onerror="this.style.display='none'" />
           <div class="phone-placeholder">
             <div class="phone-placeholder-inner">
@@ -566,23 +567,23 @@
   </div>
 </section>
 <hr class="div">
-<!-- ── SECTION 2: DETAIL ASSISTANT ── -->
-<section id="detail" class="section alt">
+<!-- ── SECTION 2: LOCATION REMINDERS ── -->
+<section id="reminders" class="section alt">
   <div class="orb" style="width:400px;height:400px;top:50%;right:-100px;transform:translateY(-50%);background:var(--teal-glow);opacity:0.3;"></div>
   <div class="container">
     <div class="split">
       <div class="feature-copy">
-        <span class="lbl fade-up">Voice Task Creator</span>
-        <h2 class="fade-up d1">Create tasks in seconds.<br><span class="tt">Use your voice to add tasks in seconds.</span></h2>
-        <p class="fade-up d2">Just describe what you need to do. DaiLY's Voice Assistant fills in the critical fields: priority, due date, estimated time, contact info, location, and more, so your tasks are always complete and actionable from the moment you create them.</p>
+        <span class="lbl fade-up">Location Reminders</span>
+        <h2 class="fade-up d1">Reminders that find you<br><span class="tt">right where you are.</span></h2>
+        <p class="fade-up d2">Tie any task to a place and DaiLY reminds you the moment you arrive: the school, the store, or the office. Location data is powered by Foursquare,* so millions of places are ready to search the second you need them.</p>
       </div>
-      <!-- upload screenshot-detail.png to GitHub -->
+      <!-- upload screenshot-location.png to GitHub -->
       <div class="phone-vis fade-up d2">
         <div class="glow teal"></div>
         <div class="phone center" style="position:relative;z-index:1;">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <img src="screenshot-detail.png" alt="Detail Assistant screen"
+            <img src="screenshot-location.png" alt="Location reminders screen"
                  onerror="this.style.display='none'" />
             <div class="phone-placeholder">
               <div class="phone-placeholder-inner">
@@ -715,9 +716,9 @@
         <p>The world's first Prioritization Engine that weighs every factor and tells you exactly what to do next.</p>
       </div>
       <div class="feat-card fade-up d1">
-        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#3ECFCF" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#3ECFCF" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Vocie Task Creator</h3>
-        <p>Describe a task in plain language. Natural Language Processing fills in important fields automatically.</p>
+        <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z" stroke="#3ECFCF" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="#3ECFCF" stroke-width="1.5"/></svg></div>
+        <h3>Location Reminders</h3>
+        <p>Tie a task to a place and get reminded the moment you arrive somewhere it matters.</p>
       </div>
       <div class="feat-card fade-up d2">
         <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#9B55EC" stroke-width="1.5"/><line x1="8" y1="13" x2="16" y2="13" stroke="#9B55EC" stroke-width="1.5"/><line x1="8" y1="17" x2="13" y2="17" stroke="#9B55EC" stroke-width="1.5"/></svg></div>
@@ -748,7 +749,7 @@
   <div class="container" style="position:relative;z-index:1;">
     <span class="lbl fade-up" style="display:block;">Get started today</span>
     <h2 class="fade-up d1">Your most important work,<br><span class="gt">always at the top.</span></h2>
-    <p class="subhead fade-up d2" style="margin:0 auto 44px;">DaiLY — the world's most advanced task app.</p>
+    <p class="subhead fade-up d2" style="margin:0 auto 44px;">DaiLY, the world's most advanced task app.</p>
     <div class="fade-up d3">
       <a href="#" class="btn-final">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -780,7 +781,7 @@
       <div class="footer-col">
         <h4>Product</h4>
         <a href="#priority">Priority AI</a>
-        <a href="#detail">Voice Task Creator</a>
+        <a href="#reminders">Reminders</a>
         <a href="#notes">Notes &amp; Files</a>
         <a href="#sharing">Teams</a>
         <a href="#calendar">Calendar</a>
@@ -801,6 +802,9 @@
   <div class="footer-bottom">
     <p>© 2026 DaiLY. All rights reserved.</p>
     <p>Made for people who get things done.</p>
+  </div>
+  <div style="max-width:1100px;margin:16px auto 0;">
+    <p style="font-size:11px;color:var(--t3);line-height:1.5;">* Location data powered by Foursquare.</p>
   </div>
 </footer>
 <script>
