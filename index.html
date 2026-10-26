@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Do more, with DaiLY</title>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="app-icon.png" />
@@ -24,8 +24,11 @@
   <meta name="twitter:image" content="https://leone-labs.com/screenshot-splash.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #08080F; color: #fff; line-height: 1.6; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: clip; max-width: 100%; -webkit-text-size-adjust: 100%; }
+    html, body { width: 100%; }
+    img, svg { max-width: 100%; }
+    #hero, #priority, #final-cta, footer { overflow: hidden; overflow: clip; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #08080F; color: #fff; line-height: 1.6; overflow-x: hidden; overflow-x: clip; position: relative; }
     :root {
       --purple: #7B35CC; --purple-b: #9B55EC;
       --purple-glow: rgba(123,53,204,0.35);
@@ -312,6 +315,8 @@
       .btn-hero { width: 100%; max-width: 260px; justify-content: center; font-size: 15px; padding: 14px 24px; }
       .btn-final { width: 100%; max-width: 280px; justify-content: center; font-size: 15px; padding: 14px 24px; }
       h1 { font-size: clamp(2rem, 8vw, 3rem); }
+      .eyebrow { white-space: normal; max-width: 100%; text-align: center; line-height: 1.4; }
+      .phone-row { max-width: 100%; }
       .phone.center { width: 220px; }
       nav { padding: 0 14px; }
       .nav-cta { padding: 8px 16px; font-size: 12.5px; }
@@ -530,7 +535,7 @@
     <div class="phone side tilt-r">
       <div class="phone-notch"></div>
       <div class="phone-screen">
-        <img src="screenshot-tasks.png" alt="DaiLY All Tasks view"
+        <img src="screenshot-calendar-fit.png" alt="DaiLY fitting tasks into free gaps in your calendar"
              onerror="this.style.display='none'" />
         <div class="phone-placeholder">
           <div class="phone-placeholder-inner">
@@ -549,6 +554,7 @@
     <span class="lbl fade-up">Priority Assistant</span>
     <h2 class="fade-up d1">Stop guessing.<br><span class="gt">Start finishing.</span></h2>
     <p class="body-text fade-up d2" style="max-width:720px;margin:0 auto 20px;">DaiLY's Priority Assistant, a proprietary next-gen prioritization engine, ranks your entire day, weighing urgency, priority, task dependencies and estimated effort, then hands you one clear order of what to do next. And it's not a black box: tap any task and it <strong style="color:#fff;">explains exactly why</strong> it ranks where it does.</p>
+    <p class="body-text fade-up d2" style="max-width:720px;margin:0 auto 20px;"><strong style="color:#fff;">It plans around your real schedule.</strong> Connect your calendar and the Priority Assistant sees your meetings and appointments, then fits your tasks into the free time you actually have. You can also import calendar events as tasks, so everything lives in one ranked list.</p>
     <p class="body-text fade-up d2" style="max-width:720px;margin:0 auto 40px;font-size:0.95rem;color:var(--t3);">🔒 The ranking runs <strong style="color:var(--teal);">entirely on your phone</strong>. Your tasks are never shipped to a cloud AI, and consent is yours to review or revoke anytime.</p>
     <!-- weight chips -->
     <div class="fade-up d2" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:640px;margin:0 auto 8px;">
@@ -556,6 +562,7 @@
       <div class="chip"><div class="chip-title">Priority · 35%</div><div class="chip-desc">What you flagged as important</div></div>
       <div class="chip t"><div class="chip-title">Dependencies · 10%</div><div class="chip-desc">What unlocks other tasks</div></div>
       <div class="chip t"><div class="chip-title">+ Effort</div><div class="chip-desc">Estimated time to finish</div></div>
+      <div class="chip"><div class="chip-title">+ Your calendar</div><div class="chip-desc">Fits tasks around your schedule</div></div>
     </div>
     <!-- single priority phone -->
     <div class="phone-vis fade-up d3" style="margin-top:12px;">
@@ -563,7 +570,7 @@
       <div class="phone center" style="position:relative;z-index:1;">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <img src="screenshot-priority.png" alt="Priority Assist screen"
+          <img src="screenshot-priority-why.png" alt="Priority Assistant explaining why a task is ranked #1"
                onerror="this.style.display='none'" />
           <div class="phone-placeholder">
             <div class="phone-placeholder-inner">
@@ -721,7 +728,7 @@
       <div class="feat-card fade-up">
         <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="rgba(123,53,204,0.4)" stroke="#9B55EC" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
         <h3>Explainable Priority Assistant</h3>
-        <p>Ranks your whole day by urgency, priority, dependencies and effort, then tells you exactly why each task is next.</p>
+        <p>Ranks your whole day by urgency, priority, dependencies and effort, fits it around your calendar, then tells you exactly why each task is next.</p>
       </div>
       <div class="feat-card fade-up d1">
         <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z" stroke="#3ECFCF" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="#3ECFCF" stroke-width="1.5"/></svg></div>
@@ -735,8 +742,8 @@
       </div>
       <div class="feat-card fade-up d3">
         <div class="feat-icon t"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" stroke="#3ECFCF" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#3ECFCF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>No Data Theft &amp; Private</h3>
-        <p>On-device logic engine. No data stolen to train AI, biometric lock, no ads and no data resale, ever.</p>
+        <h3>Offline-first &amp; Private</h3>
+        <p>Opens instantly with zero network. On-device AI, biometric lock, no ads and no data resale, ever.</p>
       </div>
       <div class="feat-card fade-up d4">
         <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#9B55EC" stroke-width="1.5"/><circle cx="9" cy="7" r="4" stroke="#9B55EC" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#9B55EC" stroke-width="1.5" opacity="0.5"/></svg></div>
@@ -809,7 +816,7 @@
       <div class="footer-logo">
         <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.02em;">DaiLY</span>
       </div>
-      <p class="footer-tagline">The smart task app that ranks your day and tells you why. Built by Leone Labs for people who want their day already sorted.</p>
+      <p class="footer-tagline">The AI-assisted task app that ranks your day and tells you why. Built by Leone Labs for people who want their day already sorted.</p>
     </div>
     <div class="footer-links">
       <div class="footer-col">
