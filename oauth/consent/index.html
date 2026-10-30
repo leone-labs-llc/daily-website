@@ -94,8 +94,14 @@
     // Return here after Google/Apple, keeping only the authorization id.
     const returnUrl = () => `${location.origin}${location.pathname}?authorization_id=${encodeURIComponent(authorizationId)}`;
 
+    // Marks a sign-in made for this connection, so main() can tell it from a session
+    // left in the browser, which could connect the wrong account without asking.
+    const SIGNED_IN_HERE = "daily-consent-signed-in";
+
     async function signIn(provider) {
-      const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: returnUrl() } });
+      sessionStorage.setItem(SIGNED_IN_HERE, "1");
+      const queryParams = provider === "google" ? { prompt: "select_account" } : undefined;
+      const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: returnUrl(), queryParams } });
       if (error) fail(error.message);
     }
 
@@ -105,6 +111,7 @@
       const { data, error } = await fn.call(sb.auth.oauth, authorizationId);
       const target = redirectFrom(data);
       if (error || !target) return fail(error ? error.message : "No redirect was returned.");
+      sessionStorage.removeItem(SIGNED_IN_HERE);
       location.assign(target);
     }
 
@@ -114,6 +121,10 @@
       // After an OAuth round trip the PKCE code is exchanged on load.
       const { data: { session } } = await sb.auth.getSession();
       if (!session) return show("signin");
+      if (!sessionStorage.getItem(SIGNED_IN_HERE)) {
+        await sb.auth.signOut({ scope: "local" });
+        return show("signin");
+      }
 
       const { data, error } = await sb.auth.oauth.getAuthorizationDetails(authorizationId);
       if (error) return fail(error.message);
