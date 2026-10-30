@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect to DAILY</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root {
+      --bg: #F6F4FB; --card: #ffffff; --text: #1A1130; --muted: #6C6480;
+      --border: #ECE5F7; --primary: #7B35CC; --on-primary: #ffffff; --danger: #B42318;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0F0B19; --card: #1A1428; --text: #F3EEFF; --muted: #A99FC0;
+              --border: #2C2342; --primary: #9b72f0; --on-primary: #ffffff; --danger: #F97066; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+           background: var(--bg); color: var(--text); padding: 16px;
+           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card { width: 100%; max-width: 420px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 24px; padding: 28px 24px; }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    p { color: var(--muted); line-height: 1.5; margin: 0 0 14px; }
+    .brand { font-weight: 800; letter-spacing: 0.5px; color: var(--primary); margin-bottom: 18px; }
+    ul { margin: 0 0 18px; padding-left: 20px; line-height: 1.6; }
+    .who { font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+    button { width: 100%; padding: 14px; border-radius: 14px; font-size: 16px; font-weight: 700;
+             cursor: pointer; border: 1px solid var(--border); margin-top: 10px; }
+    .primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+    .secondary { background: transparent; color: var(--text); }
+    .error { color: var(--danger); }
+    .hidden { display: none; }
+    a { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">DAILY</div>
+
+    <section id="loading"><p>Loading…</p></section>
+
+    <section id="signin" class="hidden">
+      <h1>Sign in to connect</h1>
+      <p>Sign in with the account you use in the DAILY app.</p>
+      <button class="primary" id="google">Continue with Google</button>
+      <button class="secondary" id="apple">Continue with Apple</button>
+    </section>
+
+    <section id="consent" class="hidden">
+      <h1>Allow <span id="client-name">this assistant</span> to use DAILY?</h1>
+      <p>It will be able to:</p>
+      <ul>
+        <li>Read your tasks and notes, including tasks friends have shared with you</li>
+        <li>Create and change tasks, notes, locations and lists</li>
+        <li>Share your tasks with your friends and groups</li>
+      </ul>
+      <p>It can't complete or delete tasks, delete notes, remove anyone from a task, or change your account. You can disconnect it at any time from the assistant's settings, and turn off all assistants in DAILY under Settings, AI Assistants.</p>
+      <div class="who">Signed in as <strong id="who"></strong> · <a href="#" id="switch">not you?</a></div>
+      <button class="primary" id="approve">Allow</button>
+      <button class="secondary" id="deny">Deny</button>
+    </section>
+
+    <section id="failed" class="hidden">
+      <h1>Something went wrong</h1>
+      <p class="error" id="error-text"></p>
+      <p>Go back to your assistant and try connecting again.</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.0/dist/umd/supabase.js"></script>
+  <script>
+    // DAILY OAuth consent page for AI-assistant connectors (Claude, ChatGPT,
+    // Gemini). Supabase Auth's OAuth 2.1 server sends the user here with
+    // ?authorization_id=…; we sign them in (same Google/Apple accounts as the
+    // app), show what the assistant is asking for, and approve or deny.
+    const SUPABASE_URL = "https://twsiouricebpbscoxfom.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3c2lvdXJpY2VicGJzY294Zm9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NDYyMzksImV4cCI6MjA5MDAyMjIzOX0.y4wdEtCMTqkWPp9wA6hROCUQUT8Qmck3WiXK7IV04es";
+
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true },
+    });
+
+    const params = new URLSearchParams(location.search);
+    const authorizationId = params.get("authorization_id");
+    const $ = (id) => document.getElementById(id);
+    const show = (id) => {
+      for (const s of ["loading", "signin", "consent", "failed"]) $(s).classList.toggle("hidden", s !== id);
+    };
+    const fail = (msg) => { $("error-text").textContent = msg; show("failed"); };
+    const redirectFrom = (d) => d && (d.redirect_url || d.redirect_to || d.url);
+
+    // Return here after Google/Apple, keeping only the authorization id.
+    const returnUrl = () => `${location.origin}${location.pathname}?authorization_id=${encodeURIComponent(authorizationId)}`;
+
+    async function signIn(provider) {
+      const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: returnUrl() } });
+      if (error) fail(error.message);
+    }
+
+    async function decide(approve) {
+      $("approve").disabled = $("deny").disabled = true;
+      const fn = approve ? sb.auth.oauth.approveAuthorization : sb.auth.oauth.denyAuthorization;
+      const { data, error } = await fn.call(sb.auth.oauth, authorizationId);
+      const target = redirectFrom(data);
+      if (error || !target) return fail(error ? error.message : "No redirect was returned.");
+      location.assign(target);
+    }
+
+    async function main() {
+      if (!authorizationId) return fail("This page needs an authorization request from your assistant.");
+
+      // After an OAuth round trip the PKCE code is exchanged on load.
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) return show("signin");
+
+      const { data, error } = await sb.auth.oauth.getAuthorizationDetails(authorizationId);
+      if (error) return fail(error.message);
+
+      // Already approved before → Supabase hands back the redirect directly.
+      if (!data.authorization_id && redirectFrom(data)) return location.assign(redirectFrom(data));
+
+      $("client-name").textContent = (data.client && (data.client.name || data.client.client_name)) || "this assistant";
+      $("who").textContent = (session.user && session.user.email) || "your DAILY account";
+      show("consent");
+    }
+
+    $("google").onclick = () => signIn("google");
+    $("apple").onclick = () => signIn("apple");
+    $("approve").onclick = () => decide(true);
+    $("deny").onclick = () => decide(false);
+    $("switch").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); show("signin"); };
+
+    main().catch((e) => fail(e && e.message ? e.message : String(e)));
+  </script>
+</body>
+</html>
