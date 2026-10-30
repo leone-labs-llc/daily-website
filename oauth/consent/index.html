@@ -49,6 +49,7 @@
 
     <section id="consent" class="hidden">
       <h1>Allow <span id="client-name">this assistant</span> to use DAILY?</h1>
+      <p id="destination" class="hidden">Connects to <strong id="destination-host"></strong>. Only allow this if you just started connecting from there. If someone sent you a link, tap Deny.</p>
       <p>It will be able to:</p>
       <ul>
         <li>Read your tasks and notes, including tasks friends have shared with you</li>
@@ -121,6 +122,10 @@
       if (!data.authorization_id && redirectFrom(data)) return location.assign(redirectFrom(data));
 
       $("client-name").textContent = (data.client && (data.client.name || data.client.client_name)) || "this assistant";
+      try {
+        $("destination-host").textContent = new URL(data.redirect_uri).hostname;
+        $("destination").classList.remove("hidden");
+      } catch {}
       $("who").textContent = (session.user && session.user.email) || "your DAILY account";
       show("consent");
     }
